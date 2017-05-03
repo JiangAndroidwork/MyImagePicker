@@ -76,13 +76,13 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
         intent.putExtra(ImageContants.IS_SHOW_BOTTOM, isShowBottom);
         activity.startActivityForResult(intent, requestCode);
     }
-    public static void start(boolean isShowBottom, Activity activity, ArrayList<ImageBean> dataList, int startPosition, ImagePickerOptions options) {
+    public static void start( Activity activity, ArrayList<ImageBean> dataList, int startPosition) {
         Intent intent = new Intent(activity, ImagePagerActivity.class);
         intent.putExtra(ImageContants.INTENT_KEY_START_POSITION, startPosition);
-        intent.putExtra(ImageContants.INTENT_KEY_OPTIONS, options);
+//        intent.putExtra(ImageContants.INTENT_KEY_OPTIONS, options);
         intent.putExtra(ImageContants.INTENT_KEY_IS_PREVIEW, true);
         intent.putParcelableArrayListExtra(ImageContants.INTENT_KEY_DATA, dataList);
-        intent.putExtra(ImageContants.IS_SHOW_BOTTOM, isShowBottom);
+        intent.putExtra(ImageContants.IS_SHOW_BOTTOM, false);
         activity.startActivityForResult(intent, 114);
     }
     @Override
@@ -190,7 +190,9 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
     //更新按钮的文案
     private void onSelectNumChanged() {
         int resultNum = ImageDataModel.getInstance().getResultNum();
-        mActionBar.setBtComplete(getString(R.string.btn_imagepicker_ok, String.valueOf(resultNum), String.valueOf(mOptions.getMaxNum())));
+        if (booleanExtra) {
+            mActionBar.setBtComplete(getString(R.string.btn_imagepicker_ok, String.valueOf(resultNum), String.valueOf(mOptions.getMaxNum())));
+        }
         if (resultNum == 0) {
             tvPreview.setEnabled(false);
             mActionBar.enablePreview(false);

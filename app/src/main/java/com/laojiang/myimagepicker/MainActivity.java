@@ -62,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     addImage();
                 } else {
                     //进入照片列表轮播详情
-                    ImagePagerActivity.start(false,MainActivity.this, selectedPhotos
-                            , position, imagePickerOptions);
+                    ImagePagerActivity.start(MainActivity.this, selectedPhotos, position);
                 }
             }
         }));
