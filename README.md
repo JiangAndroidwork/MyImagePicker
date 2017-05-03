@@ -37,12 +37,11 @@ ImagePicker build = new ImagePicker.Builder()
 ```
 > 点击进入已选图片列表轮播详情：
 ```
-  ImagePagerActivity.start(false,MainActivity.this, selectedPhotos
-                            , position, imagePickerOptions);
+  ImagePagerActivity.start(MainActivity.this, selectedPhotos, position);
 ```
->
-第一个参数：传递参数false表示就是单纯的查看图片列表轮播详情。
-第二个参数:activity
-第三个参数:照片集合
-第四个参数：当前点击图片的位置
-第五个参数:照片配置参数，可用 “ imagePickerOptions = build.getmOptions();”获取
+**第一个参数：activity** 
+
+**第二个参数:照片集合(类型：ImageBean)**
+
+**第三个参数：当前点击图片的位置**
+
