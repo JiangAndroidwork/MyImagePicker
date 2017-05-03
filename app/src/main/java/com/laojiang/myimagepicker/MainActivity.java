@@ -17,7 +17,8 @@ import com.laojiang.imagepickers.data.ImagePickerOptions;
 import com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity;
 import com.laojiang.imagepickers.utils.GlideImagePickerDisplayer;
 import com.laojiang.myimagepicker.adapter.PhotoAdapter;
-import com.laojiang.myimagepicker.utils.RecyclerItemClickListener;
+import com.laojiang.myimagepicker.interfaces.CallBackCloseLisenter;
+import com.laojiang.myimagepicker.interfaces.CallBackItemLisenter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -50,14 +51,18 @@ public class MainActivity extends AppCompatActivity {
         //初始化
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_picker);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
-        photoAdapter = new PhotoAdapter(this, selectedPhotos);
+        photoAdapter = new PhotoAdapter(9,this, selectedPhotos);
         recyclerView.setAdapter(photoAdapter);
-        /**
-         * imagePickerOptions 需要其中的 getMaxNum()方法参数
-         */
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+        photoAdapter.setCallBackLisenter(new CallBackCloseLisenter() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onColseButton(View view,int position) {
+               selectedPhotos.remove(position);
+                photoAdapter.notifyDataSetChanged();
+            }
+        });
+        photoAdapter.setCallBackItemLisenter(new CallBackItemLisenter() {
+            @Override
+            public void onItemLisenter(View view, int position) {
                 if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
                     addImage();
                 } else {
@@ -65,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
                     ImagePagerActivity.start(MainActivity.this, selectedPhotos, position);
                 }
             }
-        }));
+        });
+
+
     }
 
     private void addImage() {

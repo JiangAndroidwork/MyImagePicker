@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.laojiang.imagepickers.data.ImageBean;
 import com.laojiang.myimagepicker.R;
+import com.laojiang.myimagepicker.interfaces.CallBackCloseLisenter;
+import com.laojiang.myimagepicker.interfaces.CallBackItemLisenter;
 import com.laojiang.myimagepicker.utils.AndroidLifecycleUtils;
 
 import java.io.File;
@@ -21,85 +23,131 @@ import java.util.List;
 /**
  * Created by donglua on 15/5/31.
  */
-public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder> {
+public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-  private List<ImageBean> photoPaths = new ArrayList<ImageBean>();
-  private LayoutInflater inflater;
+    private List<ImageBean> photoPaths = new ArrayList<ImageBean>();
+    private LayoutInflater inflater;
 
-  private Context mContext;
+    private Context mContext;
+    private CallBackCloseLisenter callBackLisenter;
+    private CallBackItemLisenter callBackItemLisenter;
+    public final static int TYPE_ADD = 1;
+    final static int TYPE_PHOTO = 2;
 
-  public final static int TYPE_ADD = 1;
-  final static int TYPE_PHOTO = 2;
-
-  public final static int MAX = 9;
-
-  public PhotoAdapter(Context mContext, List<ImageBean> photoPaths) {
-    this.photoPaths = photoPaths;
-    this.mContext = mContext;
-    inflater = LayoutInflater.from(mContext);
-
-  }
+    public  static int MAX = 9;
 
 
-  @Override
-  public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View itemView = null;
-    switch (viewType) {
-      case TYPE_ADD:
-        itemView = inflater.inflate(R.layout.item_add, parent, false);
-        break;
-      case TYPE_PHOTO:
-        itemView = inflater.inflate(R.layout.picker_item_photo, parent, false);
-        break;
+    public PhotoAdapter(Context mContext, List<ImageBean> photoPaths) {
+        this.photoPaths = photoPaths;
+        this.mContext = mContext;
+        inflater = LayoutInflater.from(mContext);
+
     }
-    return new PhotoViewHolder(itemView);
-  }
+    public PhotoAdapter(int maxNum,Context mContext,List<ImageBean> photoPaths) {
+        this.MAX = maxNum;
+        this.photoPaths = photoPaths;
+        this.mContext = mContext;
+        inflater = LayoutInflater.from(mContext);
 
 
-  @Override
-  public void onBindViewHolder(final PhotoViewHolder holder, final int position) {
-
-    if (getItemViewType(position) == TYPE_PHOTO) {
-      Uri uri = Uri.fromFile(new File(photoPaths.get(position).getImagePath()));
-
-      boolean canLoadImage = AndroidLifecycleUtils.canLoadImage(holder.ivPhoto.getContext());
-
-      if (canLoadImage) {
-        Glide.with(mContext)
-                .load(uri)
-                .centerCrop()
-                .thumbnail(0.1f)
-                .placeholder(R.drawable.__picker_ic_photo_black_48dp)
-                .error(R.drawable.__picker_ic_broken_image_black_48dp)
-                .into(holder.ivPhoto);
-      }
     }
-  }
 
-
-  @Override
-  public int getItemCount() {
-    int count = photoPaths.size() + 1;
-    if (count > MAX) {
-      count = MAX;
+    public void setCallBackLisenter(CallBackCloseLisenter callBackLisenter) {
+        this.callBackLisenter = callBackLisenter;
     }
-    return count;
-  }
 
-  @Override
-  public int getItemViewType(int position) {
-    return (position == photoPaths.size() && position != MAX) ? TYPE_ADD : TYPE_PHOTO;
-  }
-
-  public static class PhotoViewHolder extends RecyclerView.ViewHolder {
-    private ImageView ivPhoto;
-    private View vSelected;
-    public PhotoViewHolder(View itemView) {
-      super(itemView);
-      ivPhoto   = (ImageView) itemView.findViewById(R.id.iv_photo);
-      vSelected = itemView.findViewById(R.id.v_selected);
-      if (vSelected != null) vSelected.setVisibility(View.GONE);
+    public void setCallBackItemLisenter(CallBackItemLisenter callBackItemLisenter) {
+        this.callBackItemLisenter = callBackItemLisenter;
     }
-  }
 
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = null;
+        if (viewType==TYPE_ADD){
+            itemView = inflater.inflate(R.layout.item_add, parent, false);
+            return new AddViewHolder(itemView);
+        }else {
+            itemView = inflater.inflate(R.layout.picker_item_photo, parent, false);
+            return new PhotoViewHolder(itemView);
+        }
+
+
+    }
+
+
+
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+
+        if (getItemViewType(position) == TYPE_PHOTO) {
+            Uri uri = Uri.fromFile(new File(photoPaths.get(position).getImagePath()));
+
+            boolean canLoadImage = AndroidLifecycleUtils.canLoadImage(((PhotoViewHolder)holder).ivPhoto.getContext());
+            ((PhotoViewHolder)holder).ivClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callBackLisenter.onColseButton(v,position);
+                }
+            });
+            ((PhotoViewHolder)holder).ivPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callBackItemLisenter.onItemLisenter(v,position);
+                }
+            });
+            if (canLoadImage) {
+                Glide.with(mContext)
+                        .load(uri)
+                        .centerCrop()
+                        .thumbnail(0.1f)
+                        .placeholder(R.drawable.__picker_ic_photo_black_48dp)
+                        .error(R.drawable.__picker_ic_broken_image_black_48dp)
+                        .into(((PhotoViewHolder)holder).ivPhoto);
+            }
+        }else if (getItemViewType(position) == TYPE_ADD){
+            ((AddViewHolder)holder).addItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callBackItemLisenter.onItemLisenter(v,position);
+                }
+            });
+        }
+    }
+
+
+    @Override
+    public int getItemCount() {
+        int count = photoPaths.size() + 1;
+        if (count > MAX) {
+            count = MAX;
+        }
+        return count;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return (position == photoPaths.size() && position != MAX) ? TYPE_ADD : TYPE_PHOTO;
+    }
+
+    public static class PhotoViewHolder extends RecyclerView.ViewHolder {
+        private ImageView ivPhoto;
+        private View vSelected;
+        private ImageView ivClose;
+
+        public PhotoViewHolder(View itemView) {
+            super(itemView);
+            ivPhoto = (ImageView) itemView.findViewById(R.id.iv_photo);
+            vSelected = itemView.findViewById(R.id.v_selected);
+            ivClose = (ImageView) itemView.findViewById(R.id.iv_colse);
+            if (vSelected != null) vSelected.setVisibility(View.GONE);
+        }
+    }
+    public static class AddViewHolder extends RecyclerView.ViewHolder{
+        private View addItem;
+        public AddViewHolder(View itemView) {
+            super(itemView);
+            addItem = itemView;
+        }
+    }
 }

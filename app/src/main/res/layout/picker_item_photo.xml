@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="90dp"
     android:layout_height="90dp">
+    <RelativeLayout
+        android:layout_width="90dp"
+        android:layout_height="90dp">
     <ImageView
         android:padding="1dip"
         android:layout_gravity="center"
@@ -12,7 +15,15 @@
         android:layout_height="90dp"
         android:adjustViewBounds="true"
         />
-
+        <ImageView
+            android:id="@+id/iv_colse"
+            android:background="@drawable/shape_close"
+            android:layout_alignParentRight="true"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/icon_close"
+            />
+    </RelativeLayout>
     <ImageView
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
