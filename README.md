@@ -19,7 +19,7 @@ allprojects {
 ```
 **在工程build.gradle中添加依赖：**
 ```
- compile 'com.github.JiangAndroidwork:MyImagePicker:v1.1.0'
+ compile 'com.github.JiangAndroidwork:MyImagePicker:v1.1.1'
  ```
 ## 2,用法：
 > 基本用法：
