@@ -255,7 +255,12 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
             mActionBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_actionbar_show));
             mViewBottom.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_bottom_show));
             mActionBar.setVisibility(View.VISIBLE);
-            mViewBottom.setVisibility(View.VISIBLE);
+
+            if (!booleanExtra) {
+                mViewBottom.setVisibility(View.VISIBLE);
+            }else {
+                mViewBottom.setVisibility(View.GONE);
+            }
             //改回状态栏颜色
             ImagePickerComUtils.changeStatusBarColor(this, getResources().getColor(R.color.imagepicker_statusbar));
             //Activity全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity顶端布局部分会被状态遮住
