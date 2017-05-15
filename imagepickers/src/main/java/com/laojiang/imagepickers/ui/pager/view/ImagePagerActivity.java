@@ -256,7 +256,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
             mViewBottom.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_bottom_show));
             mActionBar.setVisibility(View.VISIBLE);
 
-            if (!booleanExtra) {
+            if (booleanExtra) {
                 mViewBottom.setVisibility(View.VISIBLE);
             }else {
                 mViewBottom.setVisibility(View.GONE);
