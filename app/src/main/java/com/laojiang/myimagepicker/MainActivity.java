@@ -15,6 +15,7 @@ import com.laojiang.imagepickers.data.ImageBean;
 import com.laojiang.imagepickers.data.ImagePickType;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
 import com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity;
+import com.laojiang.imagepickers.ui.pager.view.VideoDetailActivity;
 import com.laojiang.imagepickers.utils.GlideImagePickerDisplayer;
 import com.laojiang.myimagepicker.adapter.PhotoAdapter;
 import com.laojiang.myimagepicker.interfaces.CallBackCloseLisenter;
@@ -66,8 +67,24 @@ public class MainActivity extends AppCompatActivity {
                 if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
                     addImage();
                 } else {
-                    //进入照片列表轮播详情
-                    ImagePagerActivity.start(MainActivity.this, selectedPhotos, position);
+                    ArrayList<ImageBean> imageList = new ArrayList<ImageBean>();
+                    ArrayList<ImageBean> videoList = new ArrayList<ImageBean>();
+                    //区分图片和视频
+                    for (ImageBean bean:selectedPhotos){
+                        if (bean.getType()==0){//图片
+                            imageList.add(bean);
+                        }else{//视频
+                            videoList.add(bean);
+                        }
+                    }
+                    ImageBean imageBean = selectedPhotos.get(position);
+                    if (imageBean.getType()==0) {
+                        //进入照片列表轮播详情
+                        ImagePagerActivity.start(MainActivity.this, imageList, position);
+                    }else {
+                        //进入到视频详情页，不需要返回数据
+                        VideoDetailActivity.start(MainActivity.this,imageBean);
+                    }
                 }
             }
         });
@@ -84,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 .doCrop(1, 1, 300, 300) //裁剪功能需要调用这个方法，多选模式下无效，参数：aspectX,aspectY,outputX,outputY
                 .displayer(new GlideImagePickerDisplayer()) //自定义图片加载器，默认是Glide实现的,可自定义图片加载器
                 .build();
-        imagePickerOptions = build.getmOptions();
         build.start(this, REQUEST_CODE, RESULT_CODE); //自定义RequestCode和ResultCode
     }
     @Override

@@ -55,9 +55,10 @@ public class ImageFloderAdapter extends ImagePickerBaseAdapter<ImageFloderBean>
                         R.drawable.glide_default_picture, R.drawable.glide_default_picture,
                         300, 300);
                 holder.setTvText(R.id.tv_floder_pop_listitem_name, imageFloderBean.getFloderName());
-                holder.setTvText(R.id.tv_floder_pop_listitem_num,
+                holder.setTvText(R.id.tv_floder_pop_listitem_num,imageFloderBean.getFloderType()==0?
                         holder.getContext().getResources().getString(R.string.imagepicker_floder_image_num
-                                , String.valueOf(imageFloderBean.getNum())));
+                                , String.valueOf(imageFloderBean.getNum())):holder.getContext().getResources().getString(R.string.imagepicker_floder_video_num
+                        , String.valueOf(imageFloderBean.getNum())));
                 if (position == mCurfloderPosition)
                     holder.setVisibility(R.id.img_floder_pop_listitem_selected, View.VISIBLE);
                 else

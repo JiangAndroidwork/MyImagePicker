@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -134,8 +135,8 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
         mViewPager.setCurrentItem(mCurPosition, false);
         mAdapter.setPhotoViewClickListener(new ImagePagerAdapter.PhotoViewClickListener() {
             @Override
-            public void OnPhotoTapListener(View view, float v, float v1) {
-                onImageSingleTap();
+            public void OnPhotoTapListener(View view, float v, float v1,int position) {
+                onImageSingleTap(position);
             }
         });
 
@@ -167,6 +168,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
                 updateActionbarTitle();
                 updateCheckBoxStatus();
             }
+            Log.i("轮播详情图片类型==",mDataList.get(position).getType()+"");
         }
     };
 
@@ -238,7 +240,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
     }
 
     //根据单击来隐藏/显示头部和底部的布局
-    private void onImageSingleTap() {
+    private void onImageSingleTap(int type) {
         if (mActionBar == null || mViewBottom == null)
             return;
         if (mActionBar.getVisibility() == View.VISIBLE) {
@@ -261,6 +263,9 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
             }else {
                 mViewBottom.setVisibility(View.GONE);
             }
+
+            ImageBean imageBean = mDataList.get(type);
+
             //改回状态栏颜色
             ImagePickerComUtils.changeStatusBarColor(this, getResources().getColor(R.color.imagepicker_statusbar));
             //Activity全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity顶端布局部分会被状态遮住

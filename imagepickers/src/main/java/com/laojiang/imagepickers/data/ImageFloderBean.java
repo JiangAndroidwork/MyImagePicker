@@ -12,6 +12,15 @@ public class ImageFloderBean implements Parcelable
     private String floderName;
     private String firstImgPath;
     private int num;
+    private int floderType = 0;//文件夹的类型 ：0是图片 1是视频 3 是图片和视频
+
+    public int getFloderType() {
+        return floderType;
+    }
+
+    public void setFloderType(int floderType) {
+        this.floderType = floderType;
+    }
 
     public ImageFloderBean(String floderId)
     {

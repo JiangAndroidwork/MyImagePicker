@@ -1,1 +1,1 @@
-include ':app', ':imagepickers'
+include ':app', ':imagepickers', 'video', ':ijkplayerlibrary'

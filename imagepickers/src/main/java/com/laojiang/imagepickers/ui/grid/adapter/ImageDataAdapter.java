@@ -30,7 +30,7 @@ public class ImageDataAdapter extends ImagePickerBaseAdapter<ImageBean>
         super(context, null);
         mOptions = viewImpl.getOptions();
 
-        //创建子布局
+    //创建子布局
         if (mOptions.isNeedCamera())
             addItemView(new ImageCameraItemView(viewImpl));
         addItemView((IImagePickerItemView<ImageBean>) new ImageContentItemView(viewImpl, this));
@@ -56,6 +56,7 @@ public class ImageDataAdapter extends ImagePickerBaseAdapter<ImageBean>
     public void refreshDatas(List<ImageBean> datas)
     {
         List<ImageBean> datalist = new ArrayList<>();
+
         datalist.addAll(datas);
         //如果有相机入口要在数据集合0号位插入一条空数据
         if (mOptions.isNeedCamera())

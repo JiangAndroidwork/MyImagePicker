@@ -40,6 +40,7 @@ public class ImageDataPresenter
             {
                 mViewImpl.showLoading();
                 boolean success = ImageDataModel.getInstance().scanAllData(context);
+
                 mViewImpl.hideLoading();
                 if (!success)
                     mViewImpl.showShortToast(R.string.error_imagepicker_scanfail);

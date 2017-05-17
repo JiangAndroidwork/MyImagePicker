@@ -47,6 +47,7 @@ public class ImageContants
      * “所有图片”文件夹的id
      */
     public static final String ID_ALL_IMAGE_FLODER = "-100";
+    public static final String ID_ALL_VIDEO_FLODER = "-200";
 
     /**
      * 默认缓存路径
@@ -87,7 +88,10 @@ public class ImageContants
      * 看大图请求码
      */
     public static final int REQUEST_CODE_DETAIL = 115;
-
+    /**
+     * 视频详情返回请求码
+     */
+    public static final int REQUEST_CODE_VIDEO = 220;
     /**
      * 裁剪结果码
      */

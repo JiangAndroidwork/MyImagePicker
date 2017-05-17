@@ -2,6 +2,7 @@ package com.laojiang.imagepickers.ui.pager.adapter;
 
 import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -49,20 +50,23 @@ public class ImagePagerAdapter extends PagerAdapter
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position)
+    public Object instantiateItem(ViewGroup container, final int position)
     {
         PhotoView photoView = new PhotoView(mActivity);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         photoView.setEnabled(true);
         ImageBean imageItem = mAllmageList.get(position);
+
+        //加载图片
         ImageDataModel.getInstance().getDisplayer().display(mActivity, imageItem.getImagePath(), photoView, mScreenWidth, mScreenHeight);
+        Log.i("每个图片的属性==",mAllmageList.get(position).getType()+"");
         photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener()
         {
             @Override
             public void onPhotoTap(View view, float x, float y)
             {
                 if (mListener != null)
-                    mListener.OnPhotoTapListener(view, x, y);
+                    mListener.OnPhotoTapListener(view, x, y,position);
             }
 
             @Override
@@ -100,7 +104,7 @@ public class ImagePagerAdapter extends PagerAdapter
 
     public interface PhotoViewClickListener
     {
-        void OnPhotoTapListener(View view, float v, float v1);
+        void OnPhotoTapListener(View view, float v, float v1,int position);
     }
 }
 

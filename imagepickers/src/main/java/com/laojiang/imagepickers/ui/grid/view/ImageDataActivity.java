@@ -20,6 +20,7 @@ import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImageFloderBean;
 import com.laojiang.imagepickers.data.ImagePickType;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
+import com.laojiang.imagepickers.ui.pager.view.VideoDetailActivity;
 import com.laojiang.imagepickers.utils.ImagePickerComUtils;
 import com.laojiang.imagepickers.utils.PermissionChecker;
 import com.laojiang.imagepickers.utils.TakePhotoCompatUtils;
@@ -49,7 +50,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
     private View mViewBottom;
     private View mViewFloder;
     private TextView mTvFloderName;
-//    private Button mBtnOk;
+    //    private Button mBtnOk;
     private com.laojiang.imagepickers.ui.grid.adapter.ImageDataAdapter mAdapter;
     private ImageFloderBean mCurFloder;
     private String mPhotoPath;
@@ -226,16 +227,32 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
                 returnSingleImage(imageBean);
             }
         } else {
-            //去查看大图的界面
-            //如果有相机入口需要调整传递的数据
-            int p = position;
-            ArrayList<ImageBean> dataList = new ArrayList<>();
-            dataList.addAll(mAdapter.getDatas());
-            if (mOptions.isNeedCamera()) {
-                p--;
-                dataList.remove(0);
+            //当 类型是图片的时候
+            if (imageBean.getType() == 0) {
+                //去查看大图的界面
+                //如果有相机入口需要调整传递的数据
+                int p = position;
+                ArrayList<ImageBean> dataList = new ArrayList<>();
+                List<ImageBean> datas = mAdapter.getDatas();
+
+                if (mOptions.isNeedCamera()) {
+                    p--;
+                    for (int i = 1; i < datas.size(); i++) {
+                        if (datas.get(i).getType() == 0) {
+                            dataList.add(datas.get(i));
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < datas.size(); i++) {
+                        if (datas.get(i).getType() == 0) {
+                            dataList.add(datas.get(i));
+                        }
+                    }
+                }
+                com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity.start(this, dataList, p, mOptions, ImageContants.REQUEST_CODE_DETAIL);
+            }else {
+                VideoDetailActivity.start(this,imageBean,ImageContants.REQUEST_CODE_VIDEO);
             }
-            com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity.start(this, dataList, p, mOptions, ImageContants.REQUEST_CODE_DETAIL);
         }
     }
 
@@ -317,7 +334,28 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
                 mAdapter.notifyDataSetChanged();
                 onSelectNumChanged(ImageDataModel.getInstance().getResultNum());
             }
+        }else if (requestCode ==ImageContants.REQUEST_CODE_VIDEO){
+            if (resultCode == ImageContants.RESULT_CODE_OK) {
+                retunVideoBack();
+            } else {
+                //刷新视图
+                mAdapter.notifyDataSetChanged();
+                onSelectNumChanged(ImageDataModel.getInstance().getResultNum());
+            }
         }
+    }
+
+    /**
+     * 视频选择完毕返回
+     */
+    private void retunVideoBack() {
+        ArrayList<ImageBean> resultList = new ArrayList<>();
+        resultList.addAll(ImageDataModel.getInstance().getmResultVideoList());
+
+        Intent intent = new Intent();
+        intent.putParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA, resultList);
+        setResult(mResultCode, intent);
+        finish();
     }
 
     @Override

@@ -9,9 +9,12 @@
     <string name="error_imagepicker_parsefail">无法读取图片</string>
     <string name="error_imagepicker_lack_params">缺少参数</string>
     <string name="imagepicker_all_image_floder">全部图片</string>
+
     <string name="btn_imagepicker_ok">完成(%1$s/%2$s)</string>
+    <string name="btn_video_ok">完成</string>
     <string name="warning_imagepicker_max_num">只能选择%1$s张图片</string>
     <string name="imagepicker_floder_image_num">%1$s张图片</string>
+    <string name="imagepicker_floder_video_num">%1$s个视频</string>
     <string name="imagepicker_pager_title_count">%1$s/%2$s</string>
     <string name="imagepicker_pager_selected">选中</string>
     <string name="warning_imagepicker_permission_sdcard_denied">无法获取外部存储卡读写权限</string>
@@ -30,4 +33,5 @@
     <string name="imagepicker_crop_decode_fail">无法获取图片数据</string>
     <string name="imagepicker_crop_dialog">正在保存图片...</string>
     <string name="imagepicker_crop_save_fail">保存图片失败</string>
+    <string name="imagepicker_all_video_floder">全部视频</string>
 </resources>

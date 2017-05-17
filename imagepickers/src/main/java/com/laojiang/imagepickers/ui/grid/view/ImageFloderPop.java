@@ -23,7 +23,7 @@ import com.laojiang.imagepickers.data.ImageFloderBean;
 import java.lang.ref.WeakReference;
 
 /**
- * Created by LWK
+ *
  * TODO 展示文件夹的PopupWindow
  */
 
