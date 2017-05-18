@@ -14,8 +14,6 @@ import com.laojiang.imagepickers.ImagePicker;
 import com.laojiang.imagepickers.data.ImageBean;
 import com.laojiang.imagepickers.data.ImagePickType;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
-import com.laojiang.imagepickers.ui.pager.callback.DownImagCallBack;
-import com.laojiang.imagepickers.ui.pager.model.DownImagModel;
 import com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity;
 import com.laojiang.imagepickers.ui.pager.view.VideoDetailActivity;
 import com.laojiang.imagepickers.utils.GlideImagePickerDisplayer;
@@ -80,20 +78,18 @@ public class MainActivity extends AppCompatActivity {
                     ImageBean imageBean = selectedPhotos.get(position);
                     if (imageBean.getType()==0) {
                         //进入照片列表轮播详情
-                        DownImagModel model = ImagePagerActivity.start(MainActivity.this, imageList, imageList.get(position).getPosition(), true);
-                        model.setFileName("111.jpg");
-                        model.setDownUrl(Environment.getExternalStorageDirectory()+"/hh/");
-                        model.setCallBack(new DownImagCallBack() {
-                            @Override
-                            public void onSuccess(String url) {
-                                Log.i("下载成功==",url);
-                            }
-
-                            @Override
-                            public void onFail(String message) {
-                                Log.i("下载失败==",message);
-                            }
-                        });
+                        ImagePagerActivity.start(MainActivity.this, imageList, imageList.get(position).getPosition());
+//                        model.setCallBack(new DownImagCallBack() {
+//                            @Override
+//                            public void onSuccess(String url) {
+//                                Log.i("下载成功==",url);
+//                            }
+//
+//                            @Override
+//                            public void onFail(String message) {
+//                                Log.i("下载失败==",message);
+//                            }
+//                        });
                     }else {
                         //进入到视频详情页，不需要返回数据
                         VideoDetailActivity.start(MainActivity.this,imageBean);
