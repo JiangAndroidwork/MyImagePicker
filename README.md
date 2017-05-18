@@ -17,7 +17,7 @@ allprojects {
     }
 }
 ```
-**在工程build.gradle中添加依赖：**
+**在moudle 中build.gradle中添加依赖：**
 ```
  compile 'com.github.JiangAndroidwork:MyImagePicker:1.1.4'
  ```
