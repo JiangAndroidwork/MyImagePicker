@@ -19,7 +19,21 @@
         android:paddingLeft="@dimen/imagepicker_padding"
         android:paddingRight="@dimen/imagepicker_padding"
         android:layout_marginRight="@dimen/imagepicker_padding"/>
-
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/bt_down"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:layout_marginRight="@dimen/imagepicker_padding"
+        android:layout_gravity="right|center_vertical"
+        android:text="下载"
+        android:textColor="#fff"
+        android:background="@drawable/imagepicker_actionbar_menu_selector"
+        android:textSize="@dimen/imagepicker_text_size"
+        />
 
     <TextView
         android:id="@+id/tv_imagepicker_actionbar_back"

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.laojiang.imagepickers.R;
@@ -218,11 +219,17 @@ public class VideoDetailActivity extends Activity implements SuperPlayer.OnNetCh
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
+            if (mActionBar.getVisibility()==View.VISIBLE){
+                mActionBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_actionbar_dismiss));
+                mActionBar.setVisibility(View.GONE);
+            }
             //横屏
             isFull = true;
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-
+            if (mActionBar.getVisibility()==View.GONE){
+                mActionBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.imagepicker_actionbar_show));
+                mActionBar.setVisibility(View.VISIBLE);
+            }
             isFull = false;
         }
         if (player != null) {

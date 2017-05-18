@@ -19,6 +19,8 @@ import com.laojiang.imagepickers.data.ImageContants;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
 import com.laojiang.imagepickers.ui.pager.adapter.ImagePagerAdapter;
+import com.laojiang.imagepickers.ui.pager.model.DownImagModel;
+import com.laojiang.imagepickers.ui.pager.model.DownImagUtils;
 import com.laojiang.imagepickers.utils.ImagePickerComUtils;
 import com.laojiang.imagepickers.widget.ImagePickerActionBar;
 import com.laojiang.imagepickers.widget.ImagePickerViewPager;
@@ -41,6 +43,8 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
     private ImagePagerAdapter mAdapter;
     private boolean booleanExtra;
     private View tvPreview;
+    private boolean isNeedDown;
+    private static DownImagModel downImagModel;
 
     /**
      * 跳转到该界面的公共方法
@@ -77,7 +81,8 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
         intent.putExtra(ImageContants.IS_SHOW_BOTTOM, isShowBottom);
         activity.startActivityForResult(intent, requestCode);
     }
-    public static void start( Activity activity, ArrayList<ImageBean> dataList, int startPosition) {
+
+    public static void start(Activity activity, ArrayList<ImageBean> dataList, int startPosition) {
         Intent intent = new Intent(activity, ImagePagerActivity.class);
         intent.putExtra(ImageContants.INTENT_KEY_START_POSITION, startPosition);
 //        intent.putExtra(ImageContants.INTENT_KEY_OPTIONS, options);
@@ -86,6 +91,26 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
         intent.putExtra(ImageContants.IS_SHOW_BOTTOM, false);
         activity.startActivityForResult(intent, 114);
     }
+
+    /**
+     * @param activity
+     * @param dataList      图片集合
+     * @param startPosition 当前的位置
+     * @param
+     */
+    public static DownImagModel start(Activity activity, ArrayList<ImageBean> dataList, int startPosition, boolean isNeedDown) {
+        Intent intent = new Intent(activity, ImagePagerActivity.class);
+        intent.putExtra(ImageContants.INTENT_KEY_START_POSITION, startPosition);
+//        intent.putExtra(ImageContants.INTENT_KEY_OPTIONS, options);
+        intent.putExtra(ImageContants.INTENT_KEY_IS_PREVIEW, true);
+        intent.putParcelableArrayListExtra(ImageContants.INTENT_KEY_DATA, dataList);
+        intent.putExtra(ImageContants.IS_SHOW_BOTTOM, false);
+        intent.putExtra(ImageContants.IS_NEED_DOWN, true);
+        activity.startActivityForResult(intent, 114);
+        downImagModel = new DownImagModel();
+        return downImagModel;
+    }
+
     @Override
     protected void beforSetContentView(Bundle savedInstanceState) {
         super.beforSetContentView(savedInstanceState);
@@ -95,6 +120,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
         mDataList = intent.getParcelableArrayListExtra(ImageContants.INTENT_KEY_DATA);
         mOptions = intent.getParcelableExtra(ImageContants.INTENT_KEY_OPTIONS);
         booleanExtra = intent.getBooleanExtra(ImageContants.IS_SHOW_BOTTOM, true);
+        isNeedDown = intent.getBooleanExtra(ImageContants.IS_NEED_DOWN, false);
     }
 
     @Override
@@ -115,7 +141,13 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
             mActionBar.showPreview();
         } else {
             mViewBottom.setVisibility(View.GONE);
-            mActionBar.hidePreview();
+            if (isNeedDown) {
+                mActionBar.setNeedDown(true);
+                mActionBar.setOnDownClickListener(this);
+            } else {
+                mActionBar.hidePreview();
+            }
+
         }
         //本身是预览界面就需要关闭预览窗口
         if (mIsPreview) {
@@ -135,7 +167,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
         mViewPager.setCurrentItem(mCurPosition, false);
         mAdapter.setPhotoViewClickListener(new ImagePagerAdapter.PhotoViewClickListener() {
             @Override
-            public void OnPhotoTapListener(View view, float v, float v1,int position) {
+            public void OnPhotoTapListener(View view, float v, float v1, int position) {
                 onImageSingleTap(position);
             }
         });
@@ -156,6 +188,16 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
             //返回上级界面选择完毕
             setResult(ImageContants.RESULT_CODE_OK);
             finish();
+        }else if (id==R.id.bt_down){
+            //下载按钮
+            DownImagUtils utils = DownImagUtils.getInstance();
+            utils.setDownImagModel(downImagModel);
+            utils.setImageUrl(mDataList.get(mCurPosition).getImagePath());
+            utils.setmContext(this);
+            downImagModel.setFileName(mDataList.get(mCurPosition).getImageId()+".jpg");
+            utils.startDown();
+
+
         }
     }
 
@@ -168,7 +210,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
                 updateActionbarTitle();
                 updateCheckBoxStatus();
             }
-            Log.i("轮播详情图片类型==",mDataList.get(position).getType()+"");
+            Log.i("轮播详情图片类型==", mDataList.get(position).getType() + "");
         }
     };
 
@@ -260,7 +302,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
 
             if (booleanExtra) {
                 mViewBottom.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mViewBottom.setVisibility(View.GONE);
             }
 
@@ -273,4 +315,6 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
                 mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }
+
+
 }

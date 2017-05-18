@@ -14,6 +14,8 @@ import com.laojiang.imagepickers.ImagePicker;
 import com.laojiang.imagepickers.data.ImageBean;
 import com.laojiang.imagepickers.data.ImagePickType;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
+import com.laojiang.imagepickers.ui.pager.callback.DownImagCallBack;
+import com.laojiang.imagepickers.ui.pager.model.DownImagModel;
 import com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity;
 import com.laojiang.imagepickers.ui.pager.view.VideoDetailActivity;
 import com.laojiang.imagepickers.utils.GlideImagePickerDisplayer;
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private String cachePath;
     private ImagePickerOptions imagePickerOptions;
     private List<ImageBean> resultList;
+    private int j= 0;
+    private int i = 0;
+    private ArrayList<ImageBean> imageList;
+    private ArrayList<ImageBean> videoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,26 +67,33 @@ public class MainActivity extends AppCompatActivity {
                 photoAdapter.notifyDataSetChanged();
             }
         });
+        imageList = new ArrayList<ImageBean>();
+        videoList = new ArrayList<ImageBean>();
+
         photoAdapter.setCallBackItemLisenter(new CallBackItemLisenter() {
             @Override
             public void onItemLisenter(View view, int position) {
                 if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
                     addImage();
                 } else {
-                    ArrayList<ImageBean> imageList = new ArrayList<ImageBean>();
-                    ArrayList<ImageBean> videoList = new ArrayList<ImageBean>();
-                    //区分图片和视频
-                    for (ImageBean bean:selectedPhotos){
-                        if (bean.getType()==0){//图片
-                            imageList.add(bean);
-                        }else{//视频
-                            videoList.add(bean);
-                        }
-                    }
+
                     ImageBean imageBean = selectedPhotos.get(position);
                     if (imageBean.getType()==0) {
                         //进入照片列表轮播详情
-                        ImagePagerActivity.start(MainActivity.this, imageList, position);
+                        DownImagModel model = ImagePagerActivity.start(MainActivity.this, imageList, imageList.get(position).getPosition(), true);
+                        model.setFileName("111.jpg");
+                        model.setDownUrl(Environment.getExternalStorageDirectory()+"/hh/");
+                        model.setCallBack(new DownImagCallBack() {
+                            @Override
+                            public void onSuccess(String url) {
+                                Log.i("下载成功==",url);
+                            }
+
+                            @Override
+                            public void onFail(String message) {
+                                Log.i("下载失败==",message);
+                            }
+                        });
                     }else {
                         //进入到视频详情页，不需要返回数据
                         VideoDetailActivity.start(MainActivity.this,imageBean);
@@ -91,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
     private void addImage() {
         ImagePicker build = new ImagePicker.Builder()
                 .pickType(ImagePickType.MUTIL) //设置选取类型(拍照ONLY_CAMERA、单选SINGLE、多选MUTIL)
@@ -112,6 +124,24 @@ public class MainActivity extends AppCompatActivity {
             Log.i("获取到的图片数据===", resultList.toString());
             selectedPhotos.addAll(resultList);
             photoAdapter.notifyDataSetChanged();
+            if (imageList!=null)
+                imageList.clear();
+            if (videoList!=null)
+                videoList.clear();
+            i = 0;
+            j = 0;
+            //区分图片和视频
+            for (ImageBean bean:selectedPhotos){
+                if (bean.getType()==0){//图片
+                    bean.setPosition(i);
+                    imageList.add(bean);
+                    i++;
+                }else{//视频
+                    bean.setPosition(j);
+                    videoList.add(bean);
+                    j++;
+                }
+            }
         }
     }
 }

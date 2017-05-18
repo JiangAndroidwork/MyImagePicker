@@ -10,7 +10,7 @@ public class ImageBean implements Parcelable {
     /**
      * 图片id【扫描sd卡后才有的】
      */
-    private String imageId;
+    private String imageId="_";
     /**
      * 原图地址
      */
@@ -35,6 +35,18 @@ public class ImageBean implements Parcelable {
      * 文件的类型：0 是图片 1是 视频
      */
     private int type;
+    /**
+     * 具体adapter的位置
+     */
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public int getType() {
         return type;

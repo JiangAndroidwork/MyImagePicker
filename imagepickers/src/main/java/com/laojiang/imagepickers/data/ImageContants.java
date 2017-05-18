@@ -1,6 +1,8 @@
 package com.laojiang.imagepickers.data;
 
 
+import android.os.Environment;
+
 import com.laojiang.imagepickers.utils.ImagePickerComUtils;
 
 /**
@@ -120,4 +122,12 @@ public class ImageContants
      * 是否显示底部选中栏
      */
     public static final String IS_SHOW_BOTTOM = "showbottom";
+    /**
+     * 是否需要下载功能
+     */
+    public static final String IS_NEED_DOWN = "isneeddown";
+    /**
+     * 默认下载路径
+     */
+    public static final String DEFAULT_DOWN_URL = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Pictures/";
 }

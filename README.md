@@ -35,7 +35,10 @@ ImagePicker build = new ImagePicker.Builder()
         imagePickerOptions = build.getmOptions();
         build.start(this, REQUEST_CODE, RESULT_CODE); //自定义RequestCode和ResultCode
 ```
-> 点击进入已选图片列表轮播详情：
+### 点击进入已选图片列表轮播详情：
+
+####按是否需要下载到本地为条件有两种构造方法：
+> 第一种，只需要传递三个参数，不需要有下载功能
 ```
   ImagePagerActivity.start(MainActivity.this, selectedPhotos, position);
 ```
@@ -44,4 +47,31 @@ ImagePicker build = new ImagePicker.Builder()
 **第二个参数:照片集合(类型：ImageBean)**
 
 **第三个参数：当前点击图片的位置**
+> 第二种，传递四个参数：
+
+有下载到本地功能默认下载到Pictures目录下
+```
+DownImagModel model = ImagePagerActivity.start(MainActivity.this, imageList, imageList.get(position).getPosition(), true);
+```
+如果需要设置下载的路径和图片名称需要设置参数并设置监听：
+```
+model.setFileName("111.jpg");
+model.setDownUrl(Environment.getExternalStorageDirectory()+"/hh/");
+ model.setCallBack(new DownImagCallBack() {
+        @Override
+         public void onSuccess(String url) {
+           Log.i("下载成功==",url);
+         }
+
+         @Override
+          public void onFail(String message) {
+             Log.i("下载失败==",message);
+          }
+         });
+```
+
+### 进入到视频播放详情页：
+```
+VideoDetailActivity.start(MainActivity.this,imageBean);
+```
 
