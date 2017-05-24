@@ -17,9 +17,9 @@ allprojects {
     }
 }
 ```
-**在工程build.gradle中添加依赖：**
+**在moudle 中build.gradle中添加依赖：**
 ```
- compile 'com.github.JiangAndroidwork:MyImagePicker:1.1.4'
+ compile 'com.github.JiangAndroidwork.MyImagePicker:ijkplayerlibrary:1.1.4'
  ```
 ## 2,用法：
 > 基本用法：
@@ -32,7 +32,7 @@ ImagePicker build = new ImagePicker.Builder()
                 .doCrop(1, 1, 300, 300) //裁剪功能需要调用这个方法，多选模式下无效，参数：aspectX,aspectY,outputX,outputY
                 .displayer(new GlideImagePickerDisplayer()) //自定义图片加载器，默认是Glide实现的,可自定义图片加载器
                 .build();
-        imagePickerOptions = build.getmOptions();
+      
         build.start(this, REQUEST_CODE, RESULT_CODE); //自定义RequestCode和ResultCode
 ```
 ### 点击进入已选图片列表轮播详情：
