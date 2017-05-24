@@ -31,8 +31,8 @@
         </activity>
         <activity android:name=".ui.crop.ImageCropActivity">
         </activity>
-        <activity android:name=".ui.pager.view.VideoDetailActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+        <activity android:name=".ui.video.VideoDetailActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

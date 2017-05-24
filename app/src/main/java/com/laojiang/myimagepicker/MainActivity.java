@@ -15,7 +15,7 @@ import com.laojiang.imagepickers.data.ImageBean;
 import com.laojiang.imagepickers.data.ImagePickType;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
 import com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity;
-import com.laojiang.imagepickers.ui.pager.view.VideoDetailActivity;
+import com.laojiang.imagepickers.ui.video.VideoDetailActivity;
 import com.laojiang.imagepickers.utils.GlideImagePickerDisplayer;
 import com.laojiang.myimagepicker.adapter.PhotoAdapter;
 import com.laojiang.myimagepicker.interfaces.CallBackCloseLisenter;
@@ -24,6 +24,8 @@ import com.laojiang.myimagepicker.interfaces.CallBackItemLisenter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.laojiang.imagepickers.ui.pager.view.VideoDetailActivity;
 
 public class MainActivity extends AppCompatActivity {
 

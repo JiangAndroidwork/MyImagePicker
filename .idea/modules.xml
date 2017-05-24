@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyImagePicker.iml" filepath="$PROJECT_DIR$/MyImagePicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ijkplayerlibrary/ijkplayerlibrary.iml" filepath="$PROJECT_DIR$/ijkplayerlibrary/ijkplayerlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/imagepickers/imagepickers.iml" filepath="$PROJECT_DIR$/imagepickers/imagepickers.iml" />
       <module fileurl="file://$PROJECT_DIR$/video/video.iml" filepath="$PROJECT_DIR$/video/video.iml" />
     </modules>

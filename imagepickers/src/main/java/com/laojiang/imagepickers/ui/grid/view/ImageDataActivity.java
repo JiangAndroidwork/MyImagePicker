@@ -20,7 +20,7 @@ import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImageFloderBean;
 import com.laojiang.imagepickers.data.ImagePickType;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
-import com.laojiang.imagepickers.ui.pager.view.VideoDetailActivity;
+import com.laojiang.imagepickers.ui.video.VideoDetailActivity;
 import com.laojiang.imagepickers.utils.ImagePickerComUtils;
 import com.laojiang.imagepickers.utils.PermissionChecker;
 import com.laojiang.imagepickers.utils.TakePhotoCompatUtils;
@@ -30,6 +30,8 @@ import java.util.List;
 
 import static com.laojiang.imagepickers.data.ImageContants.REQUEST_CODE_PERMISSION_CAMERA;
 import static com.laojiang.imagepickers.data.ImageContants.REQUEST_CODE_PERMISSION_SDCARD;
+import static com.laojiang.imagepickers.data.ImageContants.REQUEST_CODE_VIDEO;
+import static com.laojiang.imagepickers.data.ImageContants.RESULT_CODE_OK;
 import static com.laojiang.imagepickers.utils.PermissionChecker.checkPermissions;
 
 
@@ -250,8 +252,8 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
                     }
                 }
                 com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity.start(this, dataList, p, mOptions, ImageContants.REQUEST_CODE_DETAIL);
-            }else {
-                VideoDetailActivity.start(this,imageBean,ImageContants.REQUEST_CODE_VIDEO);
+            }else {//点击 进入视频
+                VideoDetailActivity.start(this,imageBean,REQUEST_CODE_VIDEO);
             }
         }
     }
@@ -327,7 +329,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
         //预览或者大图界面返回
         else if (requestCode == ImageContants.REQUEST_CODE_PREVIEW
                 || requestCode == ImageContants.REQUEST_CODE_DETAIL) {
-            if (resultCode == ImageContants.RESULT_CODE_OK) {
+            if (resultCode == RESULT_CODE_OK) {
                 returnAllSelectedImages();
             } else {
                 //刷新视图
@@ -335,7 +337,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
                 onSelectNumChanged(ImageDataModel.getInstance().getResultNum());
             }
         }else if (requestCode ==ImageContants.REQUEST_CODE_VIDEO){
-            if (resultCode == ImageContants.RESULT_CODE_OK) {
+            if (resultCode == RESULT_CODE_OK) {
                 retunVideoBack();
             } else {
                 //刷新视图
