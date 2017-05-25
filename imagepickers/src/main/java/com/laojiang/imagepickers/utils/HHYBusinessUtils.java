@@ -17,7 +17,6 @@ import java.util.List;
 
 
 /**
- * Created by small_coder on 11/30/2015.
  * 工具类
  */
 public class HHYBusinessUtils {

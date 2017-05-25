@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by LWK
- * TODO 图片选择各参数
+ *
+ * 图片选择各参数
  */
 
 public class ImagePickerOptions implements Parcelable

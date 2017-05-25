@@ -18,7 +18,7 @@ import java.io.File;
 
 
 /**
- * 类介绍（必填）：下载图片的工具类
+ * 下载图片的工具类
  */
 
 public class DownImagUtils {
@@ -40,11 +40,13 @@ public class DownImagUtils {
     private DownImagModel downImagModel;
     private Context mContext;
     private String imageUrl;
+
     private static class Instance {
-                public static DownImagUtils downImagModel = new DownImagUtils();
+        public static DownImagUtils downImagModel = new DownImagUtils();
     }
-    public static DownImagUtils getInstance(){
-        if (model ==null) {
+
+    public static DownImagUtils getInstance() {
+        if (model == null) {
             synchronized (DownImagUtils.class) {
                 if (model == null) {
                     model = Instance.downImagModel;
@@ -64,23 +66,22 @@ public class DownImagUtils {
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 if (resource != null) {
                     boolean b = false;
-                    boolean booleanExist = getBooleanExist(downImagModel.getDownUrl()+downImagModel.getFileName());
+                    boolean booleanExist = getBooleanExist(downImagModel.getDownUrl() + downImagModel.getFileName());
                     if (booleanExist) {
                         T.showThort(mContext, "图片已下载");
-                        if (downImagModel.getCallBack()!=null){
+                        if (downImagModel.getCallBack() != null) {
                             downImagModel.getCallBack().onFail("图片已下载");
                         }
-
-                    }else {
+                    } else {
                         b = BitMapFile.saveBitmap2file(resource, downImagModel.getDownUrl() + downImagModel.getFileName());
                     }
                     if (b) {
                         //成功回调
-                        if (downImagModel.getCallBack()!=null) {
+                        if (downImagModel.getCallBack() != null) {
                             downImagModel.getCallBack().onSuccess(downImagModel.getDownUrl() + downImagModel.getFileName());
                         }
                         T.showThort(mContext, "保存到" + downImagModel.getDownUrl() + "目录中");
-                        File file = new File(downImagModel.getDownUrl()+downImagModel.getFileName());
+                        File file = new File(downImagModel.getDownUrl() + downImagModel.getFileName());
                         Uri uri = Build.VERSION.SDK_INT >= 24 ? FileProvider.getUriForFile(mContext, ImagePickerFileProvider.getAuthorities(mContext), file) : Uri.fromFile(file);
                         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                         intent.setData(Uri.fromFile(file));
@@ -91,6 +92,7 @@ public class DownImagUtils {
         });
 
     }
+
     public boolean getBooleanExist(String fileUrl) {
         File file = new File(fileUrl);
         if (file.exists()) {

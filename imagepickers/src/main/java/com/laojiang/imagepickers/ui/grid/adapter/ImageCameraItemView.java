@@ -11,7 +11,7 @@ import com.laojiang.imagepickers.ui.grid.view.IImageDataView;
 
 
 /**
- * Created by LWK
+ *
  * TODO 相机入口ItemView
  */
 public class ImageCameraItemView implements IImagePickerItemView

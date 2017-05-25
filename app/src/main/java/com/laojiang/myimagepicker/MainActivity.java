@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private String cachePath;
     private ImagePickerOptions imagePickerOptions;
     private List<ImageBean> resultList;
-    private int j= 0;
+    private int j = 0;
     private int i = 0;
     private ArrayList<ImageBean> imageList;
     private ArrayList<ImageBean> videoList;
@@ -58,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
         //初始化
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_picker);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
-        photoAdapter = new PhotoAdapter(9,this, selectedPhotos);
+        photoAdapter = new PhotoAdapter(9, this, selectedPhotos);
         recyclerView.setAdapter(photoAdapter);
         photoAdapter.setCallBackLisenter(new CallBackCloseLisenter() {
             @Override
-            public void onColseButton(View view,int position) {
-               selectedPhotos.remove(position);
+            public void onColseButton(View view, int position) {
+                selectedPhotos.remove(position);
                 photoAdapter.notifyDataSetChanged();
             }
         });
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
 
                     ImageBean imageBean = selectedPhotos.get(position);
-                    if (imageBean.getType()==0) {
+                    if (imageBean.getType() == 0) {
                         //进入照片列表轮播详情
                         ImagePagerActivity.start(MainActivity.this, imageList, imageList.get(position).getPosition());
 //                        model.setCallBack(new DownImagCallBack() {
@@ -92,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
 //                                Log.i("下载失败==",message);
 //                            }
 //                        });
-                    }else {
+                    } else {
                         //进入到视频详情页，不需要返回数据
-                        VideoDetailActivity.start(MainActivity.this,imageBean);
+                        VideoDetailActivity.start(MainActivity.this, imageBean);
                     }
                 }
             }
@@ -102,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
     private void addImage() {
         ImagePicker build = new ImagePicker.Builder()
                 .pickType(ImagePickType.MUTIL) //设置选取类型(拍照ONLY_CAMERA、单选SINGLE、多选MUTIL)
@@ -112,7 +114,10 @@ public class MainActivity extends AppCompatActivity {
                 .displayer(new GlideImagePickerDisplayer()) //自定义图片加载器，默认是Glide实现的,可自定义图片加载器
                 .build();
         build.start(this, REQUEST_CODE, RESULT_CODE); //自定义RequestCode和ResultCode
+
+
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -122,19 +127,19 @@ public class MainActivity extends AppCompatActivity {
             Log.i("获取到的图片数据===", resultList.toString());
             selectedPhotos.addAll(resultList);
             photoAdapter.notifyDataSetChanged();
-            if (imageList!=null)
+            if (imageList != null)
                 imageList.clear();
-            if (videoList!=null)
+            if (videoList != null)
                 videoList.clear();
             i = 0;
             j = 0;
             //区分图片和视频
-            for (ImageBean bean:selectedPhotos){
-                if (bean.getType()==0){//图片
+            for (ImageBean bean : selectedPhotos) {
+                if (bean.getType() == 0) {//图片
                     bean.setPosition(i);
                     imageList.add(bean);
                     i++;
-                }else{//视频
+                } else {//视频
                     bean.setPosition(j);
                     videoList.add(bean);
                     j++;

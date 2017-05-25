@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by LWK
+ *
  * TODO GridView适配器
  */
 public class ImageDataAdapter extends ImagePickerBaseAdapter<ImageBean>

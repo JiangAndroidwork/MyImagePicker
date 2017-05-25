@@ -14,7 +14,7 @@ import com.laojiang.imagepickers.data.ImageFloderBean;
 
 
 /**
- * Created by LWK
+ *
  * TODO 文件夹适配器
  */
 public class ImageFloderAdapter extends ImagePickerBaseAdapter<ImageFloderBean>

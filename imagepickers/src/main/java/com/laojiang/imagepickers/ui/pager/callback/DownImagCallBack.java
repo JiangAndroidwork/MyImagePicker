@@ -1,8 +1,7 @@
 package com.laojiang.imagepickers.ui.pager.callback;
 
 /**
- * 类介绍（必填）：下载 回调接口
- * Created by Jiang on 2017/5/18 14:31.
+ * 下载 回调接口
  */
 
 public interface DownImagCallBack  {

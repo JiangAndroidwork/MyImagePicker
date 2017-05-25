@@ -9,7 +9,7 @@ import com.laojiang.imagepickers.data.ImagePickerOptions;
 import java.util.List;
 
 /**
- * Created by LWK
+ *
  * TODO ImageDataActivity的View层接口
  */
 

@@ -102,10 +102,10 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
             mViewFloder.setOnClickListener(this);
             if (mOptions.getType() == ImagePickType.SINGLE) {
                 tvPreview.setVisibility(View.GONE);
-//                mActionBar.hidePreview();
+                mActionBar.hidePreview();
                 tvPreview.setVisibility(View.GONE);
             } else {
-//                mActionBar.showPreview();
+                mActionBar.showPreview();
                 mActionBar.setOnPreviewClickListener(this);
                 tvPreview.setVisibility(View.VISIBLE);
                 tvPreview.setOnClickListener(this);

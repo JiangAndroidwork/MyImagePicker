@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by LWK
  * TODO 权限检查工具类
  */
 public class PermissionChecker

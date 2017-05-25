@@ -12,7 +12,6 @@ import com.laojiang.imagepickers.data.ImageContants;
 import java.io.File;
 
 /**
- * Created by LWK
  * TODO 拍照帮助类
  */
 

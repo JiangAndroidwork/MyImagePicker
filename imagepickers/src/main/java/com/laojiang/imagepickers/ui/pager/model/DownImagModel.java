@@ -7,8 +7,6 @@ import com.laojiang.imagepickers.ui.pager.callback.DownImagCallBack;
 
 
 /**
- * 类介绍（必填）：
- * Created by Jiang on 2017/5/18 14:54.
  */
 
 public class DownImagModel {

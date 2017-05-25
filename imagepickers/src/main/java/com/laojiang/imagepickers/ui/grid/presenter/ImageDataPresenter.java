@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by LWK
+ *
  * TODO ImageDataActivity的Presenter层
  */
 public class ImageDataPresenter

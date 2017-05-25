@@ -8,7 +8,6 @@ import com.laojiang.imagepickers.data.ImagePickerOptions;
 
 
 /**
- * Created by LWK
  * TODO 调用方法的入口
  */
 

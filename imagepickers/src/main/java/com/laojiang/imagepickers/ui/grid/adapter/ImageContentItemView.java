@@ -16,7 +16,7 @@ import com.laojiang.imagepickers.ui.grid.view.IImageDataView;
 
 
 /**
- * Created by LWK
+ *
  * TODO 显示图片的GridItem
  */
 public class ImageContentItemView implements IImagePickerItemView<ImageBean> {
@@ -91,7 +91,10 @@ public class ImageContentItemView implements IImagePickerItemView<ImageBean> {
         if (type==1){
             viewIndicator.setVisibility(View.GONE);
         }else {
-            viewIndicator.setVisibility(View.VISIBLE);
+            if (mOptions.getType() == ImagePickType.SINGLE)
+                viewIndicator.setVisibility(View.GONE);
+            else
+                viewIndicator.setVisibility(View.VISIBLE);
         }
     }
 }

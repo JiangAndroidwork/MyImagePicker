@@ -4,7 +4,6 @@ import android.content.Context;
 import android.widget.ImageView;
 
 /**
- * Created by LWK
  * TODO 图片加载接口
  */
 

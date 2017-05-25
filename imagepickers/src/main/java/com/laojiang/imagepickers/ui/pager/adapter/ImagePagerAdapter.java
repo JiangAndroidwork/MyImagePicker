@@ -18,7 +18,6 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 /**
- * Created by LWK
  * TODO 滑动查看图片的适配器
  */
 public class ImagePagerAdapter extends PagerAdapter
