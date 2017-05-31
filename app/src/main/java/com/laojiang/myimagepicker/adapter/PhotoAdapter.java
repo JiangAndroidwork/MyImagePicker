@@ -48,8 +48,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.photoPaths = photoPaths;
         this.mContext = mContext;
         inflater = LayoutInflater.from(mContext);
-
-
     }
 
     public void setCallBackLisenter(CallBackCloseLisenter callBackLisenter) {

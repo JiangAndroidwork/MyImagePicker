@@ -8,39 +8,30 @@ import android.view.MotionEvent;
 /**
  * 兼容图片缩放控件的ViewPager
  */
-public class ImagePickerViewPager extends ViewPager
-{
-    public ImagePickerViewPager(Context context)
-    {
+public class ImagePickerViewPager extends ViewPager {
+    public ImagePickerViewPager(Context context) {
         super(context);
     }
 
-    public ImagePickerViewPager(Context context, AttributeSet attrs)
-    {
+    public ImagePickerViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev)
-    {
-        try
-        {
+    public boolean onTouchEvent(MotionEvent ev) {
+        try {
             return super.onTouchEvent(ev);
-        } catch (IllegalArgumentException ex)
-        {
+        } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
         }
         return false;
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev)
-    {
-        try
-        {
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        try {
             return super.onInterceptTouchEvent(ev);
-        } catch (IllegalArgumentException ex)
-        {
+        } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
         }
         return false;
