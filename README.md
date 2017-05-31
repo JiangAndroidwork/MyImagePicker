@@ -35,6 +35,17 @@ ImagePicker build = new ImagePicker.Builder()
       
         build.start(this, REQUEST_CODE, RESULT_CODE); //自定义RequestCode和ResultCode
 ```
+>接收数据：
+```
+@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_CODE && data != null) {
+            //获取选择的图片数据
+            List<ImageBean> resultList = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
+        }
+    }
+```
 ### 点击进入已选图片列表轮播详情：
 
 ####按是否需要下载到本地为条件有两种构造方法：
