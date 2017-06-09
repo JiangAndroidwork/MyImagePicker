@@ -68,7 +68,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
 
     @Override
     protected int getContentViewResId() {
-        mPresenter = new com.laojiang.imagepickers.ui.grid.presenter.ImageDataPresenter(this);
+        mPresenter = new com.laojiang.imagepickers.ui.grid.presenter.ImageDataPresenter(mOptions,this);
         return R.layout.activity_image_data;
     }
 

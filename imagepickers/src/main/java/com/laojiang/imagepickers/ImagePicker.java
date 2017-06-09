@@ -106,7 +106,10 @@ public class ImagePicker {
             com.laojiang.imagepickers.data.ImageDataModel.getInstance().setDisplayer(displayer);
             return this;
         }
-
+        public Builder needVideo(boolean need){
+            mOptions.setNeedVideo(need);
+            return this;
+        }
         public ImagePicker build() {
             return new ImagePicker(mOptions);
         }

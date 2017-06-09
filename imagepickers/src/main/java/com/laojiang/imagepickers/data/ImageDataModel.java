@@ -148,7 +148,7 @@ public class ImageDataModel {
 
     /**
      * 扫描图片数据
-     *
+     * 需要视频
      * @param c context
      * @return 成功或失败
      */
@@ -174,6 +174,7 @@ public class ImageDataModel {
             //创建“全部图片”的文件夹
             ImageFloderBean allImgFloder = new ImageFloderBean(
                     com.laojiang.imagepickers.data.ImageContants.ID_ALL_IMAGE_FLODER, context.getResources().getString(R.string.imagepicker_all_image_floder));
+
             ImageFloderBean allVideoFloder = new ImageFloderBean(
                     com.laojiang.imagepickers.data.ImageContants.ID_ALL_VIDEO_FLODER, context.getResources().getString(R.string.imagepicker_all_video_floder));
             mAllFloderList.add(allImgFloder);
@@ -314,7 +315,6 @@ public class ImageDataModel {
                     //                            + "height=" + height + "\n"
                     //                            + "floderId=" + floderId + "\n"
                     //                            + "floderName=" + floderName);
-
                     if (new File(imagePath).exists()) {
                         //创建图片对象
                         com.laojiang.imagepickers.data.ImageBean imageBean = new com.laojiang.imagepickers.data.ImageBean();
@@ -336,11 +336,9 @@ public class ImageDataModel {
                         floderBean.gainNum();
                         floderMap.put(floderId, floderBean);
                     }
-
                 } while (curVideo.moveToNext());
                 curVideo.close();
             }
-            
             //根据最后修改时间来降序排列所有图片
             Collections.sort(mAllImgList, new com.laojiang.imagepickers.utils.ImageComparator());
             Collections.sort(mAllVideoList,new ImageComparator());
@@ -356,7 +354,118 @@ public class ImageDataModel {
             return false;
         }
     }
+    public boolean scanAllDataNoVideo(Context c) {
+        try {
+            Context context = c.getApplicationContext();
+            //清空容器
+            if (mAllImgList == null)
+                mAllImgList = new ArrayList<>();
+            if (mAllVideoList == null)
+                mAllVideoList = new ArrayList<>();
+            if (mAllFloderList == null)
+                mAllFloderList = new ArrayList<>();
+            if (mResultList == null)
+                mResultList = new ArrayList<>();
+            if (mResultVideoList == null)
+                mResultVideoList = new ArrayList<>();
+            mAllImgList.clear();
+            mAllVideoList.clear();
+            mAllFloderList.clear();
+            mResultList.clear();
+            mResultVideoList.clear();
+            //创建“全部图片”的文件夹
+            ImageFloderBean allImgFloder = new ImageFloderBean(
+                    com.laojiang.imagepickers.data.ImageContants.ID_ALL_IMAGE_FLODER, context.getResources().getString(R.string.imagepicker_all_image_floder));
+            mAllFloderList.add(allImgFloder);
+            //临时存储所有文件夹对象的Map
+            ArrayMap<String, ImageFloderBean> floderMap = new ArrayMap();
 
+            //索引字段
+            String columns[] =
+                    new String[]{MediaStore.Images.Media._ID,//照片id
+                            MediaStore.Images.Media.BUCKET_ID,//所属文件夹id
+                            //                        MediaStore.Images.Media.PICASA_ID,
+                            MediaStore.Images.Media.DATA,//图片地址
+                            MediaStore.Images.Media.WIDTH,//图片宽度
+                            MediaStore.Images.Media.HEIGHT,//图片高度
+                            //                        MediaStore.Images.Media.DISPLAY_NAME,//图片全名，带后缀
+                            //                        MediaStore.Images.Media.TITLE,
+                            //                        MediaStore.Images.Media.DATE_ADDED,//创建时间？
+                            MediaStore.Images.Media.DATE_MODIFIED,//最后修改时间
+                            //                        MediaStore.Images.Media.DATE_TAKEN,
+                            //                        MediaStore.Images.Media.SIZE,//图片文件大小
+                            MediaStore.Images.Media.BUCKET_DISPLAY_NAME,//所属文件夹名字
+                    };
+
+
+            //得到一个游标
+            ContentResolver cr = context.getContentResolver();
+            cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, null, null, null);
+            Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, null, null, null);
+
+            if (cur != null && cur.moveToFirst()) {
+                //图片总数
+                allImgFloder.setNum(cur.getCount());
+                allImgFloder.setFloderType(0);
+                // 获取指定列的索引
+                int imageIDIndex = cur.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+                int imagePathIndex = cur.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                int imageModifyIndex = cur.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_MODIFIED);
+                int imageWidthIndex = cur.getColumnIndexOrThrow(MediaStore.Images.Media.WIDTH);
+                int imageHeightIndex = cur.getColumnIndexOrThrow(MediaStore.Images.Media.HEIGHT);
+                int floderIdIndex = cur.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_ID);
+                int floderNameIndex = cur.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+                do {
+                    String imageId = cur.getString(imageIDIndex);
+                    String imagePath = cur.getString(imagePathIndex);
+                    String lastModify = cur.getString(imageModifyIndex);
+                    String width = cur.getString(imageWidthIndex);
+                    String height = cur.getString(imageHeightIndex);
+                    String floderId = cur.getString(floderIdIndex);
+                    String floderName = cur.getString(floderNameIndex);
+                    //                    Log.e("ImagePicker", "imageId=" + imageId + "\n"
+                    //                            + "imagePath=" + imagePath + "\n"
+                    //                            + "lastModify=" + lastModify + "\n"
+                    //                            + "width=" + width + "\n"
+                    //                            + "height=" + height + "\n"
+                    //                            + "floderId=" + floderId + "\n"
+                    //                            + "floderName=" + floderName);
+                    if (new File(imagePath).exists()) {
+                        //创建图片对象
+                        com.laojiang.imagepickers.data.ImageBean imageBean = new com.laojiang.imagepickers.data.ImageBean();
+                        imageBean.setImageId(imageId);
+                        imageBean.setImagePath(imagePath);
+                        imageBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
+                        imageBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
+                        imageBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
+                        imageBean.setFloderId(floderId);
+                        imageBean.setType(0);//图片的类型
+                        mAllImgList.add(imageBean);
+                        //更新文件夹对象
+                        ImageFloderBean floderBean = null;
+                        if (floderMap.containsKey(floderId))
+                            floderBean = floderMap.get(floderId);
+                        else
+                            floderBean = new ImageFloderBean(floderId, floderName);
+                        floderBean.setFirstImgPath(imagePath);
+                        floderBean.gainNum();
+                        floderMap.put(floderId, floderBean);
+                    }
+                } while (cur.moveToNext());
+                cur.close();
+            }
+            //根据最后修改时间来降序排列所有图片
+            Collections.sort(mAllImgList, new com.laojiang.imagepickers.utils.ImageComparator());
+            //设置“全部图片”文件夹的第一张图片
+            allImgFloder.setFirstImgPath(mAllImgList.size() != 0 ? mAllImgList.get(0).getImagePath() : null);
+            //统一所有文件夹
+            mAllFloderList.addAll(floderMap.values());
+            return true;
+        } catch (Exception e) {
+            Log.e("ImagePicker", "ImagePicker scan data error:" + e);
+            return false;
+        }
+    }
     /**
      * 根据文件夹获取该文件夹下所有图片数据
      *

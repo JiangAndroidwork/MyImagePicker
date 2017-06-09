@@ -8,6 +8,7 @@ import com.laojiang.imagepickers.R;
 import com.laojiang.imagepickers.data.ImageBean;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImageFloderBean;
+import com.laojiang.imagepickers.data.ImagePickerOptions;
 import com.laojiang.imagepickers.ui.grid.view.IImageDataView;
 
 import java.io.File;
@@ -15,31 +16,32 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- *
  * TODO ImageDataActivity的Presenter层
  */
-public class ImageDataPresenter
-{
+public class ImageDataPresenter {
     private IImageDataView mViewImpl;
     private ExecutorService mCachedThreadService = Executors.newCachedThreadPool();
-
-    public ImageDataPresenter(IImageDataView view)
-    {
+    private ImagePickerOptions mOptions;
+    public ImageDataPresenter(ImagePickerOptions mOptions,IImageDataView view) {
+        this.mOptions = mOptions;
         this.mViewImpl = view;
     }
-
     /**
      * 扫描图片
      */
-    public void scanData(final Context context)
-    {
-        addNewRunnable(new Runnable()
-        {
+    public void scanData(final Context context) {
+        addNewRunnable(new Runnable() {
+
+            private boolean success;
+
             @Override
-            public void run()
-            {
+            public void run() {
                 mViewImpl.showLoading();
-                boolean success = ImageDataModel.getInstance().scanAllData(context);
+                if (mOptions.isNeedVideo()){//需要视频
+                    success = ImageDataModel.getInstance().scanAllData(context);
+                }else {//不需要视频
+                    success = ImageDataModel.getInstance().scanAllDataNoVideo(context);
+                }
 
                 mViewImpl.hideLoading();
                 if (!success)
@@ -54,13 +56,10 @@ public class ImageDataPresenter
      *
      * @param floderBean 文件夹对象
      */
-    public void checkDataByFloder(final ImageFloderBean floderBean)
-    {
-        addNewRunnable(new Runnable()
-        {
+    public void checkDataByFloder(final ImageFloderBean floderBean) {
+        addNewRunnable(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 mViewImpl.onDataChanged(ImageDataModel.getInstance().getImagesByFloder(floderBean));
             }
         });
@@ -73,13 +72,11 @@ public class ImageDataPresenter
      * @param path 新图片路径
      * @return ImageBean
      */
-    public ImageBean getImageBeanByPath(String path)
-    {
+    public ImageBean getImageBeanByPath(String path) {
         if (path == null || path.length() == 0)
             return null;
 
-        try
-        {
+        try {
             File file = new File(path);
 
             ImageBean imageBean = new ImageBean();
@@ -91,8 +88,7 @@ public class ImageDataPresenter
             imageBean.setWidth(width);
             imageBean.setHeight(height);
             return imageBean;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e("ImagePicker", "ImageDataPresenter.getImageBeanByPath()--->" + e.toString());
         }
 
@@ -100,16 +96,14 @@ public class ImageDataPresenter
     }
 
     //将子线程放到线程池中
-    private void addNewRunnable(Runnable runnable)
-    {
+    private void addNewRunnable(Runnable runnable) {
         mCachedThreadService.execute(runnable);
     }
 
     /**
      * 释放资源
      */
-    public void onDestory()
-    {
+    public void onDestory() {
         ImageDataModel.getInstance().clear();
         mViewImpl = null;
     }
