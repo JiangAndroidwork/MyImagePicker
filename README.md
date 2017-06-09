@@ -43,7 +43,7 @@ ImagePicker build = new ImagePicker.Builder()
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_CODE && data != null) {
             //获取选择的图片数据
-            List<ImageBean> resultList = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
+            List<MediaDataBean> resultList = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
         }
     }
 ```
