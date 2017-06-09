@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.laojiang.imagepickers.ImagePicker;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImagePickType;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
 import com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity;
@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
     private static final int RESULT_CODE = 202;
     private RecyclerView recyclerView;
     private PhotoAdapter photoAdapter;
-    private ArrayList<ImageBean> selectedPhotos = new ArrayList<>();
+    private ArrayList<MediaDataBean> selectedPhotos = new ArrayList<>();
     private String cachePath;
     private ImagePickerOptions imagePickerOptions;
-    private List<ImageBean> resultList;
+    private List<MediaDataBean> resultList;
     private int j = 0;
     private int i = 0;
-    private ArrayList<ImageBean> imageList;
-    private ArrayList<ImageBean> videoList;
+    private ArrayList<MediaDataBean> imageList;
+    private ArrayList<MediaDataBean> videoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 photoAdapter.notifyDataSetChanged();
             }
         });
-        imageList = new ArrayList<ImageBean>();
-        videoList = new ArrayList<ImageBean>();
+        imageList = new ArrayList<MediaDataBean>();
+        videoList = new ArrayList<MediaDataBean>();
 
         photoAdapter.setCallBackItemLisenter(new CallBackItemLisenter() {
             @Override
@@ -77,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     addImage();
                 } else {
 
-                    ImageBean imageBean = selectedPhotos.get(position);
-                    if (imageBean.getType() == 0) {
+                    MediaDataBean mediaDataBean = selectedPhotos.get(position);
+                    if (mediaDataBean.getType() == 0) {
                         //进入照片列表轮播详情
                         ImagePagerActivity.start(MainActivity.this, imageList, imageList.get(position).getPosition());
 //                        model.setCallBack(new DownImagCallBack() {
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 //                        });
                     } else {
                         //进入到视频详情页，不需要返回数据
-                        VideoDetailActivity.start(MainActivity.this, imageBean);
+                        VideoDetailActivity.start(MainActivity.this, mediaDataBean);
                     }
                 }
             }
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             i = 0;
             j = 0;
             //区分图片和视频
-            for (ImageBean bean : selectedPhotos) {
+            for (MediaDataBean bean : selectedPhotos) {
                 if (bean.getType() == 0) {//图片
                     bean.setPosition(i);
                     imageList.add(bean);

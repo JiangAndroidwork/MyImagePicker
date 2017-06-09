@@ -2,7 +2,7 @@ package com.laojiang.imagepickers.ui.grid.view;
 
 
 import com.laojiang.imagepickers.base.activity.IImageBaseView;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImageFloderBean;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
 
@@ -23,11 +23,11 @@ public interface IImageDataView extends IImageBaseView
 
     void hideLoading();
 
-    void onDataChanged(List<ImageBean> dataList);
+    void onDataChanged(List<MediaDataBean> dataList);
 
     void onFloderChanged(ImageFloderBean floderBean);
 
-    void onImageClicked(ImageBean imageBean, int position);
+    void onImageClicked(MediaDataBean mediaDataBean, int position);
 
     void onSelectNumChanged(int curNum);
 

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Function:图片实体类
  */
-public class ImageBean implements Parcelable {
+public class MediaDataBean implements Parcelable {
     /**
      * 图片id【扫描sd卡后才有的】
      */
@@ -56,7 +56,7 @@ public class ImageBean implements Parcelable {
         this.type = type;
     }
 
-    public ImageBean() {
+    public MediaDataBean() {
     }
 
     public String getImageId() {
@@ -109,7 +109,7 @@ public class ImageBean implements Parcelable {
 
     @Override
     public String toString() {
-        return "ImageBean{" +
+        return "MediaDataBean{" +
                 "imageId='" + imageId + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 ", lastModified=" + lastModified +
@@ -127,7 +127,7 @@ public class ImageBean implements Parcelable {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj instanceof ImageBean && ((ImageBean) obj).getImageId().equals(imageId));
+        return (obj instanceof MediaDataBean && ((MediaDataBean) obj).getImageId().equals(imageId));
     }
 
     @Override
@@ -141,7 +141,7 @@ public class ImageBean implements Parcelable {
         dest.writeInt(this.type);
     }
 
-    protected ImageBean(Parcel in) {
+    protected MediaDataBean(Parcel in) {
         this.imageId = in.readString();
         this.imagePath = in.readString();
         this.lastModified = (Long) in.readValue(Long.class.getClassLoader());
@@ -151,15 +151,15 @@ public class ImageBean implements Parcelable {
         this.type = in.readInt();
     }
 
-    public static final Creator<ImageBean> CREATOR = new Creator<ImageBean>() {
+    public static final Creator<MediaDataBean> CREATOR = new Creator<MediaDataBean>() {
         @Override
-        public ImageBean createFromParcel(Parcel source) {
-            return new ImageBean(source);
+        public MediaDataBean createFromParcel(Parcel source) {
+            return new MediaDataBean(source);
         }
 
         @Override
-        public ImageBean[] newArray(int size) {
-            return new ImageBean[size];
+        public MediaDataBean[] newArray(int size) {
+            return new MediaDataBean[size];
         }
     };
 }

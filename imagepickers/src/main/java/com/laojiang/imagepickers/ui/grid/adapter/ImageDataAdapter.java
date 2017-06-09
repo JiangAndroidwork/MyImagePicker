@@ -8,7 +8,7 @@ import android.widget.AbsListView;
 import com.laojiang.imagepickers.base.adapter.IImagePickerItemView;
 import com.laojiang.imagepickers.base.adapter.ImagePickerBaseAdapter;
 import com.laojiang.imagepickers.base.adapter.ImagePickerViewHolder;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
 import com.laojiang.imagepickers.ui.grid.view.IImageDataView;
 
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * TODO GridView适配器
  */
-public class ImageDataAdapter extends ImagePickerBaseAdapter<ImageBean>
+public class ImageDataAdapter extends ImagePickerBaseAdapter<MediaDataBean>
 {
     private ImagePickerOptions mOptions;
     //每个元素的宽高
@@ -33,7 +33,7 @@ public class ImageDataAdapter extends ImagePickerBaseAdapter<ImageBean>
     //创建子布局
         if (mOptions.isNeedCamera())
             addItemView(new ImageCameraItemView(viewImpl));
-        addItemView((IImagePickerItemView<ImageBean>) new ImageContentItemView(viewImpl, this));
+        addItemView((IImagePickerItemView<MediaDataBean>) new ImageContentItemView(viewImpl, this));
 
         //计算每个元素的宽高
         int screenWidth = context.getResources().getDisplayMetrics().widthPixels;
@@ -53,9 +53,9 @@ public class ImageDataAdapter extends ImagePickerBaseAdapter<ImageBean>
     }
 
     @Override
-    public void refreshDatas(List<ImageBean> datas)
+    public void refreshDatas(List<MediaDataBean> datas)
     {
-        List<ImageBean> datalist = new ArrayList<>();
+        List<MediaDataBean> datalist = new ArrayList<>();
 
         datalist.addAll(datas);
         //如果有相机入口要在数据集合0号位插入一条空数据

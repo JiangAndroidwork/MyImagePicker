@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.myimagepicker.R;
 import com.laojiang.myimagepicker.interfaces.CallBackCloseLisenter;
 import com.laojiang.myimagepicker.interfaces.CallBackItemLisenter;
@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<ImageBean> photoPaths = new ArrayList<ImageBean>();
+    private List<MediaDataBean> photoPaths = new ArrayList<MediaDataBean>();
     private LayoutInflater inflater;
 
     private Context mContext;
@@ -37,13 +37,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public  static int MAX = 9;
 
 
-    public PhotoAdapter(Context mContext, List<ImageBean> photoPaths) {
+    public PhotoAdapter(Context mContext, List<MediaDataBean> photoPaths) {
         this.photoPaths = photoPaths;
         this.mContext = mContext;
         inflater = LayoutInflater.from(mContext);
 
     }
-    public PhotoAdapter(int maxNum,Context mContext,List<ImageBean> photoPaths) {
+    public PhotoAdapter(int maxNum,Context mContext,List<MediaDataBean> photoPaths) {
         this.MAX = maxNum;
         this.photoPaths = photoPaths;
         this.mContext = mContext;

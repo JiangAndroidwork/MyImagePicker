@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.laojiang.imagepickers.R;
 import com.laojiang.imagepickers.base.activity.VideoBaseActivity;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImageContants;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.widget.ImagePickerActionBar;
@@ -29,30 +29,30 @@ public class VideoDetailActivity extends VideoBaseActivity {
     private ImagePickerActionBar mActionBar;
     private ImageView videoBG;
     private ImageView mPlayer;
-    private ImageBean videoBean;
+    private MediaDataBean videoBean;
     private boolean isCallBack;
     private static Activity activity;
     /**
      *
      * @param activity
-     * @param imageBean  图片基类
+     * @param mediaDataBean  图片基类
      * @param requestCode  请求码
      */
-    public static void start(Activity activity, ImageBean imageBean, int requestCode) {
+    public static void start(Activity activity, MediaDataBean mediaDataBean, int requestCode) {
 
         Intent intent = new Intent(activity, VideoDetailActivity.class);
-        intent.putExtra(VIDEO_URL, imageBean.getImagePath());
-        intent.putExtra(IMAGEBEAN, imageBean);
+        intent.putExtra(VIDEO_URL, mediaDataBean.getImagePath());
+        intent.putExtra(IMAGEBEAN, mediaDataBean);
         intent.putExtra(ISCALLBACK, requestCode == REQUEST_CODE_VIDEO);
         activity.startActivityForResult(intent, requestCode);
     }
 
 
 
-    public static void start(Activity activity,ImageBean imageBean){
+    public static void start(Activity activity,MediaDataBean mediaDataBean){
         Intent intent = new Intent(activity,VideoDetailActivity.class);
-        intent.putExtra(VIDEO_URL, imageBean.getImagePath());
-        intent.putExtra(IMAGEBEAN, imageBean);
+        intent.putExtra(VIDEO_URL, mediaDataBean.getImagePath());
+        intent.putExtra(IMAGEBEAN, mediaDataBean);
         intent.putExtra(ISCALLBACK, false);
         activity.startActivity(intent);
     }

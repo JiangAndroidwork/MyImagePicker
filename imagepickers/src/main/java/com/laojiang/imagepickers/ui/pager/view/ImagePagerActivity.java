@@ -14,7 +14,7 @@ import android.widget.CompoundButton;
 
 import com.laojiang.imagepickers.R;
 import com.laojiang.imagepickers.base.activity.ImagePickerBaseActivity;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImageContants;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * 滑动查看图片的基类Activity
  */
 public class ImagePagerActivity extends ImagePickerBaseActivity {
-    private ArrayList<ImageBean> mDataList;
+    private ArrayList<MediaDataBean> mDataList;
     private int mCurPosition;
     private boolean mIsPreview;
     private ImagePickerOptions mOptions;
@@ -55,7 +55,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
      * @param options       核心参数
      * @param requestCode   请求码
      */
-    public static void start(Activity activity, ArrayList<ImageBean> dataList, int startPosition, ImagePickerOptions options, int requestCode) {
+    public static void start(Activity activity, ArrayList<MediaDataBean> dataList, int startPosition, ImagePickerOptions options, int requestCode) {
         Intent intent = new Intent(activity, ImagePagerActivity.class);
         intent.putExtra(ImageContants.INTENT_KEY_START_POSITION, startPosition);
         intent.putExtra(ImageContants.INTENT_KEY_OPTIONS, options);
@@ -72,7 +72,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
      * @param options
      * @param requestCode
      */
-    public static void start(boolean isShowBottom, Activity activity, ArrayList<ImageBean> dataList, int startPosition, ImagePickerOptions options, int requestCode) {
+    public static void start(boolean isShowBottom, Activity activity, ArrayList<MediaDataBean> dataList, int startPosition, ImagePickerOptions options, int requestCode) {
         Intent intent = new Intent(activity, ImagePagerActivity.class);
         intent.putExtra(ImageContants.INTENT_KEY_START_POSITION, startPosition);
         intent.putExtra(ImageContants.INTENT_KEY_OPTIONS, options);
@@ -82,7 +82,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
         activity.startActivityForResult(intent, requestCode);
     }
 
-    public static void start(Activity activity, ArrayList<ImageBean> dataList, int startPosition) {
+    public static void start(Activity activity, ArrayList<MediaDataBean> dataList, int startPosition) {
         Intent intent = new Intent(activity, ImagePagerActivity.class);
         intent.putExtra(ImageContants.INTENT_KEY_START_POSITION, startPosition);
 //        intent.putExtra(ImageContants.INTENT_KEY_OPTIONS, options);
@@ -98,7 +98,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
      * @param startPosition 当前的位置
      * @param
      */
-    public static DownImagModel start(Activity activity, ArrayList<ImageBean> dataList, int startPosition, boolean isNeedDown) {
+    public static DownImagModel start(Activity activity, ArrayList<MediaDataBean> dataList, int startPosition, boolean isNeedDown) {
         Intent intent = new Intent(activity, ImagePagerActivity.class);
         intent.putExtra(ImageContants.INTENT_KEY_START_POSITION, startPosition);
 //        intent.putExtra(ImageContants.INTENT_KEY_OPTIONS, options);
@@ -181,7 +181,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
     protected void onClick(View v, int id) {
         if (id == R.id.tv_imagepicker_pager_preview) {
             //去预览界面
-            ImagePagerActivity.start(this, (ArrayList<ImageBean>) ImageDataModel.getInstance().getResultList()
+            ImagePagerActivity.start(this, (ArrayList<MediaDataBean>) ImageDataModel.getInstance().getResultList()
                     , 0, mOptions, ImageContants.REQUEST_CODE_PREVIEW);
 
         } else if (id == R.id.btn_image_data_ok) {
@@ -306,7 +306,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
                 mViewBottom.setVisibility(View.GONE);
             }
 
-            ImageBean imageBean = mDataList.get(type);
+            MediaDataBean mediaDataBean = mDataList.get(type);
 
             //改回状态栏颜色
             ImagePickerComUtils.changeStatusBarColor(this, getResources().getColor(R.color.imagepicker_statusbar));

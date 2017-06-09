@@ -5,7 +5,7 @@ import android.media.ExifInterface;
 import android.util.Log;
 
 import com.laojiang.imagepickers.R;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImageFloderBean;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
@@ -70,24 +70,24 @@ public class ImageDataPresenter {
      * 根据新图片路径创建ImageBean
      *
      * @param path 新图片路径
-     * @return ImageBean
+     * @return MediaDataBean
      */
-    public ImageBean getImageBeanByPath(String path) {
+    public MediaDataBean getImageBeanByPath(String path) {
         if (path == null || path.length() == 0)
             return null;
 
         try {
             File file = new File(path);
 
-            ImageBean imageBean = new ImageBean();
-            imageBean.setImagePath(path);
-            imageBean.setLastModified(Long.valueOf(file.lastModified()));
+            MediaDataBean mediaDataBean = new MediaDataBean();
+            mediaDataBean.setImagePath(path);
+            mediaDataBean.setLastModified(Long.valueOf(file.lastModified()));
             ExifInterface exifInterface = new ExifInterface(path);
             int width = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_WIDTH, 0);
             int height = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_LENGTH, 0);
-            imageBean.setWidth(width);
-            imageBean.setHeight(height);
-            return imageBean;
+            mediaDataBean.setWidth(width);
+            mediaDataBean.setHeight(height);
+            return mediaDataBean;
         } catch (Exception e) {
             Log.e("ImagePicker", "ImageDataPresenter.getImageBeanByPath()--->" + e.toString());
         }

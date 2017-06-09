@@ -31,13 +31,13 @@ public class VideoDataModel {
     }
 
     //所有图片
-    private List<ImageBean> mAllImgList = new ArrayList<>();
+    private List<MediaDataBean> mAllImgList = new ArrayList<>();
 
     //所有文件夹List
     private List<ImageFloderBean> mAllFloderList = new ArrayList<>();
 
     //选中的图片List
-    private List<ImageBean> mResultList = new ArrayList<>();
+    private List<MediaDataBean> mResultList = new ArrayList<>();
 
     //图片显示器
     private com.laojiang.imagepickers.utils.IImagePickerDisplayer mDisplayer;
@@ -63,7 +63,7 @@ public class VideoDataModel {
     /**
      * 获取所有图片数据List
      */
-    public List<ImageBean> getAllImgList() {
+    public List<MediaDataBean> getAllImgList() {
         return mAllImgList;
     }
 
@@ -77,34 +77,34 @@ public class VideoDataModel {
     /**
      * 获取所有已选中图片数据List
      */
-    public List<ImageBean> getResultList() {
+    public List<MediaDataBean> getResultList() {
         return mResultList;
     }
 
     /**
      * 添加新选中图片到结果中
      */
-    public boolean addDataToResult(ImageBean imageBean) {
+    public boolean addDataToResult(MediaDataBean mediaDataBean) {
         if (mResultList != null)
-            return mResultList.add(imageBean);
+            return mResultList.add(mediaDataBean);
         return false;
     }
 
     /**
      * 移除已选中的某图片
      */
-    public boolean delDataFromResult(ImageBean imageBean) {
+    public boolean delDataFromResult(MediaDataBean mediaDataBean) {
         if (mResultList != null)
-            return mResultList.remove(imageBean);
+            return mResultList.remove(mediaDataBean);
         return false;
     }
 
     /**
      * 判断是否已选中某张图
      */
-    public boolean hasDataInResult(ImageBean imageBean) {
+    public boolean hasDataInResult(MediaDataBean mediaDataBean) {
         if (mResultList != null)
-            return mResultList.contains(imageBean);
+            return mResultList.contains(mediaDataBean);
         return false;
     }
 
@@ -196,14 +196,14 @@ public class VideoDataModel {
 
                     if (new File(imagePath).exists()) {
                         //创建图片对象
-                        ImageBean imageBean = new ImageBean();
-                        imageBean.setImageId(imageId);
-                        imageBean.setImagePath(imagePath);
-                        imageBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
-                        imageBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
-                        imageBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
-                        imageBean.setFloderId(floderId);
-                        mAllImgList.add(imageBean);
+                        MediaDataBean mediaDataBean = new MediaDataBean();
+                        mediaDataBean.setImageId(imageId);
+                        mediaDataBean.setImagePath(imagePath);
+                        mediaDataBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
+                        mediaDataBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
+                        mediaDataBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
+                        mediaDataBean.setFloderId(floderId);
+                        mAllImgList.add(mediaDataBean);
                         //更新文件夹对象
                         ImageFloderBean floderBean = null;
                         if (floderMap.containsKey(floderId))
@@ -239,7 +239,7 @@ public class VideoDataModel {
      * @param floderBean 文件夹对象
      * @return 图片数据list
      */
-    public List<ImageBean> getVideoByFloder(ImageFloderBean floderBean) {
+    public List<MediaDataBean> getVideoByFloder(ImageFloderBean floderBean) {
         if (floderBean == null)
             return null;
 
@@ -247,12 +247,12 @@ public class VideoDataModel {
         if (ImagePickerComUtils.isEquals(ImageContants.ID_ALL_IMAGE_FLODER, floderId)) {
             return mAllImgList;
         } else {
-            ArrayList<ImageBean> resultList = new ArrayList<>();
+            ArrayList<MediaDataBean> resultList = new ArrayList<>();
             int size = mAllImgList.size();
             for (int i = 0; i < size; i++) {
-                ImageBean imageBean = mAllImgList.get(i);
-                if (imageBean != null && ImagePickerComUtils.isEquals(floderId, imageBean.getFloderId()))
-                    resultList.add(imageBean);
+                MediaDataBean mediaDataBean = mAllImgList.get(i);
+                if (mediaDataBean != null && ImagePickerComUtils.isEquals(floderId, mediaDataBean.getFloderId()))
+                    resultList.add(mediaDataBean);
             }
             return resultList;
         }

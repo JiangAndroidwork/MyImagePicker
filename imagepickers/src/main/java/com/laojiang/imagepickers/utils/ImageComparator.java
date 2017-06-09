@@ -1,17 +1,17 @@
 package com.laojiang.imagepickers.utils;
 
 
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 
 import java.util.Comparator;
 
 /**
  * Function:对本地图片先后顺序排列的比较器
  */
-public class ImageComparator implements Comparator<ImageBean>
+public class ImageComparator implements Comparator<MediaDataBean>
 {
     @Override
-    public int compare(ImageBean first, ImageBean second)
+    public int compare(MediaDataBean first, MediaDataBean second)
     {
         long fModify = first.getLastModified();
         long sModify = second.getLastModified();

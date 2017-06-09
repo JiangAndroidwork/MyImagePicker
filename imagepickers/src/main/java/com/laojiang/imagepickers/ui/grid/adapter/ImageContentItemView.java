@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.laojiang.imagepickers.R;
 import com.laojiang.imagepickers.base.adapter.IImagePickerItemView;
 import com.laojiang.imagepickers.base.adapter.ImagePickerViewHolder;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImageContants;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImagePickType;
@@ -19,7 +19,7 @@ import com.laojiang.imagepickers.ui.grid.view.IImageDataView;
  *
  * TODO 显示图片的GridItem
  */
-public class ImageContentItemView implements IImagePickerItemView<ImageBean> {
+public class ImageContentItemView implements IImagePickerItemView<MediaDataBean> {
     private IImageDataView mViewImpl;
     private ImagePickerOptions mOptions;
     private com.laojiang.imagepickers.ui.grid.adapter.ImageDataAdapter mAdapter;
@@ -36,28 +36,28 @@ public class ImageContentItemView implements IImagePickerItemView<ImageBean> {
     }
 
     @Override
-    public boolean isForViewType(ImageBean item, int position) {
+    public boolean isForViewType(MediaDataBean item, int position) {
         return mOptions != null && (!mOptions.isNeedCamera() || (mOptions.isNeedCamera() && position != 0));
     }
 
     @Override
-    public void setData(ImagePickerViewHolder holder, final ImageBean imageBean, final int position, ViewGroup parent) {
+    public void setData(ImagePickerViewHolder holder, final MediaDataBean mediaDataBean, final int position, ViewGroup parent) {
         ImageView imgContent = holder.findView(R.id.img_imagepicker_grid_content);
         View viewIndicator = holder.findView(R.id.ck_imagepicker_grid_content);
 
         //显示UI
-        if (imageBean != null)
+        if (mediaDataBean != null)
             ImageDataModel.getInstance().getDisplayer()
-                    .display(holder.getContext(), imageBean.getImagePath(), imgContent
+                    .display(holder.getContext(), mediaDataBean.getImagePath(), imgContent
                             , R.drawable.glide_default_picture, R.drawable.glide_default_picture
                             , ImageContants.DISPLAY_THUMB_SIZE, ImageContants.DISPLAY_THUMB_SIZE);
         //判断照片还是视频
-        int type = imageBean.getType();
+        int type = mediaDataBean.getType();
         imgContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mViewImpl != null)
-                    mViewImpl.onImageClicked(imageBean, position);
+                    mViewImpl.onImageClicked(mediaDataBean, position);
             }
         });
 
@@ -65,7 +65,7 @@ public class ImageContentItemView implements IImagePickerItemView<ImageBean> {
             viewIndicator.setVisibility(View.GONE);
         } else {
             viewIndicator.setVisibility(View.VISIBLE);
-            if (ImageDataModel.getInstance().hasDataInResult(imageBean))
+            if (ImageDataModel.getInstance().hasDataInResult(mediaDataBean))
                 viewIndicator.setBackgroundResource(R.drawable.ck_imagepicker_grid_selected);
             else
                 viewIndicator.setBackgroundResource(R.drawable.ck_imagepicker_grid_normal);
@@ -77,11 +77,11 @@ public class ImageContentItemView implements IImagePickerItemView<ImageBean> {
                     if (curNum == mOptions.getMaxNum()) {
                         mViewImpl.warningMaxNum();
                         return;
-                    } else if (imageBean.getType()==0){
-                        if (ImageDataModel.getInstance().hasDataInResult(imageBean))
-                            ImageDataModel.getInstance().delDataFromResult(imageBean);
+                    } else if (mediaDataBean.getType()==0){
+                        if (ImageDataModel.getInstance().hasDataInResult(mediaDataBean))
+                            ImageDataModel.getInstance().delDataFromResult(mediaDataBean);
                         else
-                            ImageDataModel.getInstance().addDataToResult(imageBean);
+                            ImageDataModel.getInstance().addDataToResult(mediaDataBean);
                         mAdapter.notifyDataSetChanged();
                         mViewImpl.onSelectNumChanged(ImageDataModel.getInstance().getResultNum());
                     }

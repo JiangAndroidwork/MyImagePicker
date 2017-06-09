@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.laojiang.imagepickers.ImagePicker;
 import com.laojiang.imagepickers.R;
 import com.laojiang.imagepickers.base.activity.ImagePickerBaseActivity;
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImageContants;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImageFloderBean;
@@ -190,7 +190,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
     }
 
     @Override
-    public void onDataChanged(final List<ImageBean> dataList) {
+    public void onDataChanged(final List<MediaDataBean> dataList) {
         if (mGridView != null && mAdapter != null) {
             mHandler.post(new Runnable() {
                 @Override
@@ -220,22 +220,22 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
     }
 
     @Override
-    public void onImageClicked(ImageBean imageBean, int position) {
+    public void onImageClicked(MediaDataBean mediaDataBean, int position) {
         if (mOptions.getType() == ImagePickType.SINGLE) {
             if (mOptions.isNeedCrop()) {
                 //执行裁剪
-                com.laojiang.imagepickers.ui.crop.ImageCropActivity.start(this, imageBean.getImagePath(), mOptions);
+                com.laojiang.imagepickers.ui.crop.ImageCropActivity.start(this, mediaDataBean.getImagePath(), mOptions);
             } else {
-                returnSingleImage(imageBean);
+                returnSingleImage(mediaDataBean);
             }
         } else {
             //当 类型是图片的时候
-            if (imageBean.getType() == 0) {
+            if (mediaDataBean.getType() == 0) {
                 //去查看大图的界面
                 //如果有相机入口需要调整传递的数据
                 int p = position;
-                ArrayList<ImageBean> dataList = new ArrayList<>();
-                List<ImageBean> datas = mAdapter.getDatas();
+                ArrayList<MediaDataBean> dataList = new ArrayList<>();
+                List<MediaDataBean> datas = mAdapter.getDatas();
 
                 if (mOptions.isNeedCamera()) {
                     p--;
@@ -253,7 +253,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
                 }
                 com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity.start(this, dataList, p, mOptions, ImageContants.REQUEST_CODE_DETAIL);
             }else {//点击 进入视频
-                VideoDetailActivity.start(this,imageBean,REQUEST_CODE_VIDEO);
+                VideoDetailActivity.start(this, mediaDataBean,REQUEST_CODE_VIDEO);
             }
         }
     }
@@ -281,7 +281,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
     protected void onClick(View v, int id) {
         if (id == R.id.tv_imagepicker_actionbar_preview) {
             //去预览界面
-            com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity.start(this, (ArrayList<ImageBean>) ImageDataModel.getInstance().getResultList()
+            com.laojiang.imagepickers.ui.pager.view.ImagePagerActivity.start(this, (ArrayList<MediaDataBean>) ImageDataModel.getInstance().getResultList()
                     , 0, mOptions, ImageContants.REQUEST_CODE_PREVIEW);
         } else if (id == R.id.ll_image_data_bottom_floder) {
             //弹出文件夹切换菜单
@@ -351,7 +351,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
      * 视频选择完毕返回
      */
     private void retunVideoBack() {
-        ArrayList<ImageBean> resultList = new ArrayList<>();
+        ArrayList<MediaDataBean> resultList = new ArrayList<>();
         resultList.addAll(ImageDataModel.getInstance().getmResultVideoList());
 
         Intent intent = new Intent();
@@ -366,9 +366,9 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
     }
 
     //返回单张图片数据
-    private void returnSingleImage(ImageBean imageBean) {
-        ArrayList<ImageBean> list = new ArrayList<>();
-        list.add(imageBean);
+    private void returnSingleImage(MediaDataBean mediaDataBean) {
+        ArrayList<MediaDataBean> list = new ArrayList<>();
+        list.add(mediaDataBean);
         Intent intent = new Intent();
         intent.putParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA, list);
         setResult(mResultCode, intent);
@@ -377,7 +377,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
 
     //返回所有已选中的图片
     private void returnAllSelectedImages() {
-        ArrayList<ImageBean> resultList = new ArrayList<>();
+        ArrayList<MediaDataBean> resultList = new ArrayList<>();
         resultList.addAll(ImageDataModel.getInstance().getResultList());
 
         Intent intent = new Intent();

@@ -32,17 +32,17 @@ public class ImageDataModel {
     }
 
     //所有图片
-    private List<com.laojiang.imagepickers.data.ImageBean> mAllImgList = new ArrayList<>();
+    private List<MediaDataBean> mAllImgList = new ArrayList<>();
     //所有视频
-    private List<com.laojiang.imagepickers.data.ImageBean> mAllVideoList = new ArrayList<>();
+    private List<MediaDataBean> mAllVideoList = new ArrayList<>();
 
     //所有文件夹List
     private List<ImageFloderBean> mAllFloderList = new ArrayList<>();
 
     //选中的图片List
-    private List<com.laojiang.imagepickers.data.ImageBean> mResultList = new ArrayList<>();
+    private List<MediaDataBean> mResultList = new ArrayList<>();
     //选中的视频list
-    private List<com.laojiang.imagepickers.data.ImageBean> mResultVideoList = new ArrayList<>();
+    private List<MediaDataBean> mResultVideoList = new ArrayList<>();
 
     //图片显示器
     private com.laojiang.imagepickers.utils.IImagePickerDisplayer mDisplayer;
@@ -68,7 +68,7 @@ public class ImageDataModel {
     /**
      * 获取所有图片数据List
      */
-    public List<com.laojiang.imagepickers.data.ImageBean> getAllImgList() {
+    public List<MediaDataBean> getAllImgList() {
         return mAllImgList;
     }
 
@@ -76,7 +76,7 @@ public class ImageDataModel {
      * 获取所有视频数据List
      * @return
      */
-    public List<com.laojiang.imagepickers.data.ImageBean> getAllVideoList() {
+    public List<MediaDataBean> getAllVideoList() {
         return mAllVideoList;
     }
 
@@ -91,51 +91,51 @@ public class ImageDataModel {
      * 获取选中的video数据
      * @return
      */
-    public List<ImageBean> getmResultVideoList() {
+    public List<MediaDataBean> getmResultVideoList() {
         return mResultVideoList;
     }
 
     /**
      * 获取所有已选中图片数据List
      */
-    public List<com.laojiang.imagepickers.data.ImageBean> getResultList() {
+    public List<MediaDataBean> getResultList() {
         return mResultList;
     }
 
     /**
      * 添加新选中图片到结果中
      */
-    public boolean addDataToResult(com.laojiang.imagepickers.data.ImageBean imageBean) {
+    public boolean addDataToResult(MediaDataBean mediaDataBean) {
         if (mResultList != null)
-            return mResultList.add(imageBean);
+            return mResultList.add(mediaDataBean);
         return false;
     }
 
     /**
      * 添加新选中的视频到结果中
-     * @param imageBean
+     * @param mediaDataBean
      * @return
      */
-    public boolean addDataToVideoResult(com.laojiang.imagepickers.data.ImageBean imageBean) {
+    public boolean addDataToVideoResult(MediaDataBean mediaDataBean) {
         if (mResultVideoList != null)
-            return mResultVideoList.add(imageBean);
+            return mResultVideoList.add(mediaDataBean);
         return false;
     }
     /**
      * 移除已选中的某图片
      */
-    public boolean delDataFromResult(com.laojiang.imagepickers.data.ImageBean imageBean) {
+    public boolean delDataFromResult(MediaDataBean mediaDataBean) {
         if (mResultList != null)
-            return mResultList.remove(imageBean);
+            return mResultList.remove(mediaDataBean);
         return false;
     }
 
     /**
      * 判断是否已选中某张图
      */
-    public boolean hasDataInResult(com.laojiang.imagepickers.data.ImageBean imageBean) {
+    public boolean hasDataInResult(MediaDataBean mediaDataBean) {
         if (mResultList != null)
-            return mResultList.contains(imageBean);
+            return mResultList.contains(mediaDataBean);
         return false;
     }
 
@@ -237,15 +237,15 @@ public class ImageDataModel {
 
                     if (new File(imagePath).exists()) {
                         //创建图片对象
-                        com.laojiang.imagepickers.data.ImageBean imageBean = new com.laojiang.imagepickers.data.ImageBean();
-                        imageBean.setImageId(imageId);
-                        imageBean.setImagePath(imagePath);
-                        imageBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
-                        imageBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
-                        imageBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
-                        imageBean.setFloderId(floderId);
-                        imageBean.setType(0);//图片的类型
-                        mAllImgList.add(imageBean);
+                        MediaDataBean mediaDataBean = new MediaDataBean();
+                        mediaDataBean.setImageId(imageId);
+                        mediaDataBean.setImagePath(imagePath);
+                        mediaDataBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
+                        mediaDataBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
+                        mediaDataBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
+                        mediaDataBean.setFloderId(floderId);
+                        mediaDataBean.setType(0);//图片的类型
+                        mAllImgList.add(mediaDataBean);
                         //更新文件夹对象
                         ImageFloderBean floderBean = null;
                         if (floderMap.containsKey(floderId))
@@ -317,15 +317,15 @@ public class ImageDataModel {
                     //                            + "floderName=" + floderName);
                     if (new File(imagePath).exists()) {
                         //创建图片对象
-                        com.laojiang.imagepickers.data.ImageBean imageBean = new com.laojiang.imagepickers.data.ImageBean();
-                        imageBean.setImageId(imageId);
-                        imageBean.setImagePath(imagePath);
-                        imageBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
-                        imageBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
-                        imageBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
-                        imageBean.setFloderId(floderId);
-                        imageBean.setType(1);//视频的类型
-                        mAllVideoList.add(imageBean);
+                        MediaDataBean mediaDataBean = new MediaDataBean();
+                        mediaDataBean.setImageId(imageId);
+                        mediaDataBean.setImagePath(imagePath);
+                        mediaDataBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
+                        mediaDataBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
+                        mediaDataBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
+                        mediaDataBean.setFloderId(floderId);
+                        mediaDataBean.setType(1);//视频的类型
+                        mAllVideoList.add(mediaDataBean);
                         //更新文件夹对象
                         ImageFloderBean floderBean = null;
                         if (floderMap.containsKey(floderId))
@@ -432,15 +432,15 @@ public class ImageDataModel {
                     //                            + "floderName=" + floderName);
                     if (new File(imagePath).exists()) {
                         //创建图片对象
-                        com.laojiang.imagepickers.data.ImageBean imageBean = new com.laojiang.imagepickers.data.ImageBean();
-                        imageBean.setImageId(imageId);
-                        imageBean.setImagePath(imagePath);
-                        imageBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
-                        imageBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
-                        imageBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
-                        imageBean.setFloderId(floderId);
-                        imageBean.setType(0);//图片的类型
-                        mAllImgList.add(imageBean);
+                        MediaDataBean mediaDataBean = new MediaDataBean();
+                        mediaDataBean.setImageId(imageId);
+                        mediaDataBean.setImagePath(imagePath);
+                        mediaDataBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
+                        mediaDataBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
+                        mediaDataBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
+                        mediaDataBean.setFloderId(floderId);
+                        mediaDataBean.setType(0);//图片的类型
+                        mAllImgList.add(mediaDataBean);
                         //更新文件夹对象
                         ImageFloderBean floderBean = null;
                         if (floderMap.containsKey(floderId))
@@ -472,7 +472,7 @@ public class ImageDataModel {
      * @param floderBean 文件夹对象
      * @return 图片数据list
      */
-    public List<com.laojiang.imagepickers.data.ImageBean> getImagesByFloder(ImageFloderBean floderBean) {
+    public List<MediaDataBean> getImagesByFloder(ImageFloderBean floderBean) {
         if (floderBean == null)
             return null;
 
@@ -482,19 +482,19 @@ public class ImageDataModel {
         } else if (ImagePickerComUtils.isEquals(com.laojiang.imagepickers.data.ImageContants.ID_ALL_VIDEO_FLODER, floderId)) {
             return mAllVideoList;
         }else {
-            ArrayList<com.laojiang.imagepickers.data.ImageBean> resultList = new ArrayList<>();
+            ArrayList<MediaDataBean> resultList = new ArrayList<>();
             int size = mAllImgList.size();
             int sizeVideo = mAllVideoList.size();
 
             for (int i = 0; i < size; i++) {
-                com.laojiang.imagepickers.data.ImageBean imageBean = mAllImgList.get(i);
-                if (imageBean != null && ImagePickerComUtils.isEquals(floderId, imageBean.getFloderId()))
-                    resultList.add(imageBean);
+                MediaDataBean mediaDataBean = mAllImgList.get(i);
+                if (mediaDataBean != null && ImagePickerComUtils.isEquals(floderId, mediaDataBean.getFloderId()))
+                    resultList.add(mediaDataBean);
             }
             for (int i = 0;i<sizeVideo;i++){
-                com.laojiang.imagepickers.data.ImageBean imageBean = mAllVideoList.get(i);
-                if (imageBean != null && ImagePickerComUtils.isEquals(floderId, imageBean.getFloderId()))
-                    resultList.add(imageBean);
+                MediaDataBean mediaDataBean = mAllVideoList.get(i);
+                if (mediaDataBean != null && ImagePickerComUtils.isEquals(floderId, mediaDataBean.getFloderId()))
+                    resultList.add(mediaDataBean);
             }
             return resultList;
         }

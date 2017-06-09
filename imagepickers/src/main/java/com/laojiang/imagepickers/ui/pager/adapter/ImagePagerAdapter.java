@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.laojiang.imagepickers.data.ImageBean;
+import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.utils.ImagePickerComUtils;
 
@@ -24,11 +24,11 @@ public class ImagePagerAdapter extends PagerAdapter
 {
     private int mScreenWidth;
     private int mScreenHeight;
-    private ArrayList<ImageBean> mAllmageList = new ArrayList<>();
+    private ArrayList<MediaDataBean> mAllmageList = new ArrayList<>();
     private Activity mActivity;
     public PhotoViewClickListener mListener;
 
-    public ImagePagerAdapter(Activity activity, ArrayList<ImageBean> images)
+    public ImagePagerAdapter(Activity activity, ArrayList<MediaDataBean> images)
     {
         this.mActivity = activity;
         this.mAllmageList.addAll(images);
@@ -37,7 +37,7 @@ public class ImagePagerAdapter extends PagerAdapter
         mScreenHeight = ImagePickerComUtils.getScreenHeight(activity);
     }
 
-    public void setData(ArrayList<ImageBean> images)
+    public void setData(ArrayList<MediaDataBean> images)
     {
         mAllmageList.clear();
         this.mAllmageList.addAll(images);
@@ -54,7 +54,7 @@ public class ImagePagerAdapter extends PagerAdapter
         PhotoView photoView = new PhotoView(mActivity);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         photoView.setEnabled(true);
-        ImageBean imageItem = mAllmageList.get(position);
+        MediaDataBean imageItem = mAllmageList.get(position);
 
         //加载图片
         ImageDataModel.getInstance().getDisplayer().display(mActivity, imageItem.getImagePath(), photoView, mScreenWidth, mScreenHeight);
