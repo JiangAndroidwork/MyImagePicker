@@ -198,7 +198,7 @@ public class VideoDataModel {
                         //创建图片对象
                         MediaDataBean mediaDataBean = new MediaDataBean();
                         mediaDataBean.setImageId(imageId);
-                        mediaDataBean.setImagePath(imagePath);
+                        mediaDataBean.setMediaPath(imagePath);
                         mediaDataBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
                         mediaDataBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
                         mediaDataBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
@@ -222,7 +222,7 @@ public class VideoDataModel {
             //根据最后修改时间来降序排列所有图片
             Collections.sort(mAllImgList, new com.laojiang.imagepickers.utils.ImageComparator());
             //设置“全部图片”文件夹的第一张图片
-            allImgFloder.setFirstImgPath(mAllImgList.size() != 0 ? mAllImgList.get(0).getImagePath() : null);
+            allImgFloder.setFirstImgPath(mAllImgList.size() != 0 ? mAllImgList.get(0).getMediaPath() : null);
             //统一所有文件夹
             mAllFloderList.addAll(floderMap.values());
 

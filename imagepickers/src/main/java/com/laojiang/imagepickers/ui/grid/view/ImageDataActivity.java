@@ -14,16 +14,16 @@ import android.widget.TextView;
 import com.laojiang.imagepickers.ImagePicker;
 import com.laojiang.imagepickers.R;
 import com.laojiang.imagepickers.base.activity.ImagePickerBaseActivity;
-import com.laojiang.imagepickers.data.MediaDataBean;
 import com.laojiang.imagepickers.data.ImageContants;
 import com.laojiang.imagepickers.data.ImageDataModel;
 import com.laojiang.imagepickers.data.ImageFloderBean;
 import com.laojiang.imagepickers.data.ImagePickType;
 import com.laojiang.imagepickers.data.ImagePickerOptions;
+import com.laojiang.imagepickers.data.MediaDataBean;
+import com.laojiang.imagepickers.ui.camera.DiyCameraActivity;
 import com.laojiang.imagepickers.ui.video.VideoDetailActivity;
 import com.laojiang.imagepickers.utils.ImagePickerComUtils;
 import com.laojiang.imagepickers.utils.PermissionChecker;
-import com.laojiang.imagepickers.utils.TakePhotoCompatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,7 @@ import static com.laojiang.imagepickers.utils.PermissionChecker.checkPermissions
  */
 public class ImageDataActivity extends ImagePickerBaseActivity implements IImageDataView
         , com.laojiang.imagepickers.ui.grid.view.ImageFloderPop.onFloderItemClickListener {
+
 
     private com.laojiang.imagepickers.ui.grid.presenter.ImageDataPresenter mPresenter;
     private ImagePickerOptions mOptions;
@@ -148,7 +149,10 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
 
     //执行拍照的方法
     private void doTakePhoto() {
-        mPhotoPath = TakePhotoCompatUtils.takePhoto(this, ImageContants.REQUEST_CODE_TAKE_PHOTO, mOptions.getCachePath());
+        Intent intent = new Intent(this, DiyCameraActivity.class);
+        startActivityForResult(intent,ImageContants.CAMERA_REQUEST);
+        //调用系统拍照
+//        mPhotoPath = TakePhotoCompatUtils.takePhoto(this, ImageContants.REQUEST_CODE_TAKE_PHOTO, mOptions.getCachePath());
     }
 
     //执行扫描sd卡的方法
@@ -224,7 +228,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
         if (mOptions.getType() == ImagePickType.SINGLE) {
             if (mOptions.isNeedCrop()) {
                 //执行裁剪
-                com.laojiang.imagepickers.ui.crop.ImageCropActivity.start(this, mediaDataBean.getImagePath(), mOptions);
+                com.laojiang.imagepickers.ui.crop.ImageCropActivity.start(this, mediaDataBean.getMediaPath(), mOptions);
             } else {
                 returnSingleImage(mediaDataBean);
             }
@@ -344,6 +348,24 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
                 mAdapter.notifyDataSetChanged();
                 onSelectNumChanged(ImageDataModel.getInstance().getResultNum());
             }
+        }else if (requestCode==ImageContants.CAMERA_REQUEST){//自定义 拍照请求码
+            String path = data.getStringExtra(ImageContants.DIY_CAMERA_PATH);
+            MediaDataBean bean = new MediaDataBean();
+            bean.setType(1);
+            bean.setMediaPath(path);
+            mPhotoPath = path;
+            returnSingleImage(bean);
+        }else if (resultCode==ImageContants.CAMERA_SHEXIANG_REQUEST){//自定义 摄像请求码
+            String path = data.getStringExtra(ImageContants.DIY_CAMERA_SHEXIANG_PATH);
+            ArrayList<MediaDataBean> resultList = new ArrayList<>();
+            MediaDataBean bean = new MediaDataBean();
+            bean.setType(1);
+            bean.setMediaPath(path);
+            resultList.add(bean);
+            Intent intent = new Intent();
+            intent.putParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA, resultList);
+            setResult(mResultCode, intent);
+            finish();
         }
     }
 

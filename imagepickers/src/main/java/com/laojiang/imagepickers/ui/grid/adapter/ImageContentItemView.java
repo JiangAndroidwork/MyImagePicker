@@ -48,7 +48,7 @@ public class ImageContentItemView implements IImagePickerItemView<MediaDataBean>
         //显示UI
         if (mediaDataBean != null)
             ImageDataModel.getInstance().getDisplayer()
-                    .display(holder.getContext(), mediaDataBean.getImagePath(), imgContent
+                    .display(holder.getContext(), mediaDataBean.getMediaPath(), imgContent
                             , R.drawable.glide_default_picture, R.drawable.glide_default_picture
                             , ImageContants.DISPLAY_THUMB_SIZE, ImageContants.DISPLAY_THUMB_SIZE);
         //判断照片还是视频

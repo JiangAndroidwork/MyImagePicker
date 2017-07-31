@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
 //                            public void onSuccess(String url) {
 //                                Log.i("下载成功==",url);
 //                            }
-//
 //                            @Override
 //                            public void onFail(String message) {
 //                                Log.i("下载失败==",message);
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //添加图片
     private void addImage() {
         ImagePicker build = new ImagePicker.Builder()
                 .pickType(ImagePickType.MUTIL) //设置选取类型(拍照ONLY_CAMERA、单选SINGLE、多选MUTIL)

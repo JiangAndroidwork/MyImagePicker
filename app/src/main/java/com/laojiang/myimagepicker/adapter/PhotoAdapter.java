@@ -79,7 +79,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if (getItemViewType(position) == TYPE_PHOTO) {
-            Uri uri = Uri.fromFile(new File(photoPaths.get(position).getImagePath()));
+            Uri uri = Uri.fromFile(new File(photoPaths.get(position).getMediaPath()));
 
             boolean canLoadImage = AndroidLifecycleUtils.canLoadImage(((PhotoViewHolder)holder).ivPhoto.getContext());
             ((PhotoViewHolder)holder).ivClose.setOnClickListener(new View.OnClickListener() {

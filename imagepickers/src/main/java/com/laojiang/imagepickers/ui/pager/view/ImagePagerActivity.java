@@ -192,7 +192,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
             //下载按钮
             DownImagUtils utils = DownImagUtils.getInstance();
             utils.setDownImagModel(downImagModel);
-            utils.setImageUrl(mDataList.get(mCurPosition).getImagePath());
+            utils.setImageUrl(mDataList.get(mCurPosition).getMediaPath());
             utils.setmContext(this);
             downImagModel.setFileName(mDataList.get(mCurPosition).getImageId()+".jpg");
             utils.startDown();

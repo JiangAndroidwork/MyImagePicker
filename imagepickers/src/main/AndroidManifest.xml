@@ -33,6 +33,9 @@
         </activity>
         <activity android:name=".ui.video.VideoDetailActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.camera.DiyCameraActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
     </application>
 
 </manifest>

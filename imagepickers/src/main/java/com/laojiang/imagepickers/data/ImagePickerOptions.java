@@ -19,15 +19,12 @@ public class ImagePickerOptions implements Parcelable {
     public com.laojiang.imagepickers.data.ImagePickType getType() {
         return type;
     }
-
     public void setType(com.laojiang.imagepickers.data.ImagePickType type) {
         this.type = type;
     }
-
     public int getMaxNum() {
         return maxNum;
     }
-
     public void setMaxNum(int maxNum) {
         if (maxNum > 0)
             this.maxNum = maxNum;

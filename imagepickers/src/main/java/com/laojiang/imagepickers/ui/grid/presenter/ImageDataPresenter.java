@@ -80,7 +80,7 @@ public class ImageDataPresenter {
             File file = new File(path);
 
             MediaDataBean mediaDataBean = new MediaDataBean();
-            mediaDataBean.setImagePath(path);
+            mediaDataBean.setMediaPath(path);
             mediaDataBean.setLastModified(Long.valueOf(file.lastModified()));
             ExifInterface exifInterface = new ExifInterface(path);
             int width = exifInterface.getAttributeInt(ExifInterface.TAG_IMAGE_WIDTH, 0);

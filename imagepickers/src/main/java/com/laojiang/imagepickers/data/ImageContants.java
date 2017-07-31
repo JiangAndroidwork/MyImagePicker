@@ -103,7 +103,16 @@ public class ImageContants
      * 代表操作完成的ResultCode
      */
     public static final int RESULT_CODE_OK = 123;
-
+    /**
+     * 自定义照相请求code
+     *
+     */
+    public static final int CAMERA_REQUEST = 124;
+    /**
+     * 自定义摄像请求code
+     *
+     */
+    public static final int CAMERA_SHEXIANG_REQUEST = 125;
     /**
      * 拍照后图片名字前缀
      */
@@ -130,4 +139,13 @@ public class ImageContants
      * 默认下载路径
      */
     public static final String DEFAULT_DOWN_URL = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Pictures/";
+    /**
+     * 自定义照相
+     */
+    public static final String DIY_CAMERA_PATH = "diycamerapath";
+    /**
+     * 自定义摄像
+     */
+    public static final String DIY_CAMERA_SHEXIANG_PATH = "diycamerapath";
+
 }

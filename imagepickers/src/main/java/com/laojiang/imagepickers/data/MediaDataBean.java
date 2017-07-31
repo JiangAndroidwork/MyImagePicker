@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Function:图片实体类
+ * Function:图片和视频实体类
  */
 public class MediaDataBean implements Parcelable {
     /**
@@ -14,7 +14,7 @@ public class MediaDataBean implements Parcelable {
     /**
      * 原图地址
      */
-    private String imagePath;
+    private String mediaPath;
     /**
      * 最后修改时间
      */
@@ -67,12 +67,12 @@ public class MediaDataBean implements Parcelable {
         this.imageId = imageId;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getMediaPath() {
+        return mediaPath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setMediaPath(String mediaPath) {
+        this.mediaPath = mediaPath;
     }
 
     public Long getLastModified() {
@@ -111,7 +111,7 @@ public class MediaDataBean implements Parcelable {
     public String toString() {
         return "MediaDataBean{" +
                 "imageId='" + imageId + '\'' +
-                ", imagePath='" + imagePath + '\'' +
+                ", mediaPath='" + mediaPath + '\'' +
                 ", lastModified=" + lastModified +
                 ", width=" + width +
                 ", height=" + height +
@@ -133,7 +133,7 @@ public class MediaDataBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.imageId);
-        dest.writeString(this.imagePath);
+        dest.writeString(this.mediaPath);
         dest.writeValue(this.lastModified);
         dest.writeInt(this.width);
         dest.writeInt(this.height);
@@ -143,7 +143,7 @@ public class MediaDataBean implements Parcelable {
 
     protected MediaDataBean(Parcel in) {
         this.imageId = in.readString();
-        this.imagePath = in.readString();
+        this.mediaPath = in.readString();
         this.lastModified = (Long) in.readValue(Long.class.getClassLoader());
         this.width = in.readInt();
         this.height = in.readInt();
