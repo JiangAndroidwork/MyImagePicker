@@ -19,7 +19,7 @@ allprojects {
 ```
 **在moudle 中build.gradle中添加依赖：**
 ```
- compile 'com.github.JiangAndroidwork:MyImagePicker:1.1.8'
+ compile 'com.github.JiangAndroidwork:MyImagePicker:1.1.9'
  ```
 ## 2,用法：
 > 基本用法：
@@ -43,7 +43,7 @@ ImagePicker build = new ImagePicker.Builder()
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_CODE && data != null) {
             //获取选择的图片数据
-            List<ImageBean> resultList = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
+            List<MediaDataBean> resultList = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
         }
     }
 ```
