@@ -84,4 +84,7 @@ VideoDetailActivity.start(MainActivity.this,imageBean);
 
 库依赖：
  >compile 'com.github.chrisbanes:PhotoView:1.3.1'
- compile 'com.github.bumptech.glide:glide:3.7.0'
+ 
+ >compile 'com.github.bumptech.glide:glide:3.7.0'
+ 
+ >compile 'com.github.JiangAndroidwork:MyCamera:1.1'
