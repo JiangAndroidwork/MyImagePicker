@@ -40,6 +40,16 @@ public class MediaDataBean implements Parcelable {
      */
     private int position;
 
+    private int videoLength;
+
+    public int getVideoLength() {
+        return videoLength;
+    }
+
+    public void setVideoLength(int videoLength) {
+        this.videoLength = videoLength;
+    }
+
     public int getPosition() {
         return position;
     }

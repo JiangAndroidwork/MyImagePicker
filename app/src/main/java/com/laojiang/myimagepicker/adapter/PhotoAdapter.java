@@ -34,7 +34,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public final static int TYPE_ADD = 1;
     final static int TYPE_PHOTO = 2;
 
-    public  static int MAX = 9;
+    public static int MAX = 9;
 
 
     public PhotoAdapter(Context mContext, List<MediaDataBean> photoPaths) {
@@ -43,7 +43,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         inflater = LayoutInflater.from(mContext);
 
     }
-    public PhotoAdapter(int maxNum,Context mContext,List<MediaDataBean> photoPaths) {
+
+    public PhotoAdapter(int maxNum, Context mContext, List<MediaDataBean> photoPaths) {
         this.MAX = maxNum;
         this.photoPaths = photoPaths;
         this.mContext = mContext;
@@ -61,19 +62,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = null;
-        if (viewType==TYPE_ADD){
+        if (viewType == TYPE_ADD) {
             itemView = inflater.inflate(R.layout.item_add, parent, false);
             return new AddViewHolder(itemView);
-        }else {
+        } else {
             itemView = inflater.inflate(R.layout.picker_item_photo, parent, false);
             return new PhotoViewHolder(itemView);
         }
-
-
     }
-
-
-
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
@@ -81,17 +77,17 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (getItemViewType(position) == TYPE_PHOTO) {
             Uri uri = Uri.fromFile(new File(photoPaths.get(position).getMediaPath()));
 
-            boolean canLoadImage = AndroidLifecycleUtils.canLoadImage(((PhotoViewHolder)holder).ivPhoto.getContext());
-            ((PhotoViewHolder)holder).ivClose.setOnClickListener(new View.OnClickListener() {
+            boolean canLoadImage = AndroidLifecycleUtils.canLoadImage(((PhotoViewHolder) holder).ivPhoto.getContext());
+            ((PhotoViewHolder) holder).ivClose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    callBackLisenter.onColseButton(v,position);
+                    callBackLisenter.onColseButton(v, position);
                 }
             });
-            ((PhotoViewHolder)holder).ivPhoto.setOnClickListener(new View.OnClickListener() {
+            ((PhotoViewHolder) holder).ivPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    callBackItemLisenter.onItemLisenter(v,position);
+                    callBackItemLisenter.onItemLisenter(v, position);
                 }
             });
             if (canLoadImage) {
@@ -101,13 +97,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         .thumbnail(0.1f)
                         .placeholder(R.drawable.__picker_ic_photo_black_48dp)
                         .error(R.drawable.__picker_ic_broken_image_black_48dp)
-                        .into(((PhotoViewHolder)holder).ivPhoto);
+                        .into(((PhotoViewHolder) holder).ivPhoto);
             }
-        }else if (getItemViewType(position) == TYPE_ADD){
-            ((AddViewHolder)holder).addItem.setOnClickListener(new View.OnClickListener() {
+        } else if (getItemViewType(position) == TYPE_ADD) {
+            ((AddViewHolder) holder).addItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    callBackItemLisenter.onItemLisenter(v,position);
+                    callBackItemLisenter.onItemLisenter(v, position);
                 }
             });
         }
@@ -141,8 +137,10 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             if (vSelected != null) vSelected.setVisibility(View.GONE);
         }
     }
-    public static class AddViewHolder extends RecyclerView.ViewHolder{
+
+    public static class AddViewHolder extends RecyclerView.ViewHolder {
         private View addItem;
+
         public AddViewHolder(View itemView) {
             super(itemView);
             addItem = itemView;

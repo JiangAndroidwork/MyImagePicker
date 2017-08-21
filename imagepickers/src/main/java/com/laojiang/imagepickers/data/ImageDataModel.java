@@ -278,6 +278,7 @@ public class ImageDataModel {
                             //                        MediaStore.Video.Media.DATE_TAKEN,
                             //                        MediaStore.Video.Media.SIZE,//图片文件大小
                             MediaStore.Video.Media.BUCKET_DISPLAY_NAME,//所属文件夹名字
+                            MediaStore.Video.Media.DURATION
                     };
 
 
@@ -298,7 +299,7 @@ public class ImageDataModel {
                 int imageHeightIndex = curVideo.getColumnIndexOrThrow(MediaStore.Video.Media.HEIGHT);
                 int floderIdIndex = curVideo.getColumnIndexOrThrow(MediaStore.Video.Media.BUCKET_ID);
                 int floderNameIndex = curVideo.getColumnIndexOrThrow(MediaStore.Video.Media.BUCKET_DISPLAY_NAME);
-
+                int durationLength = curVideo.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION);
 
                 do {
                     String imageId = curVideo.getString(imageIDIndex);
@@ -308,6 +309,7 @@ public class ImageDataModel {
                     String height = curVideo.getString(imageHeightIndex);
                     String floderId = curVideo.getString(floderIdIndex);
                     String floderName = curVideo.getString(floderNameIndex);
+                    int duration = curVideo.getInt(durationLength);
                     //                    Log.e("ImagePicker", "imageId=" + imageId + "\n"
                     //                            + "imagePath=" + imagePath + "\n"
                     //                            + "lastModify=" + lastModify + "\n"
@@ -320,6 +322,7 @@ public class ImageDataModel {
                         MediaDataBean mediaDataBean = new MediaDataBean();
                         mediaDataBean.setImageId(imageId);
                         mediaDataBean.setMediaPath(imagePath);
+                        mediaDataBean.setVideoLength(duration);
                         mediaDataBean.setLastModified(ImagePickerComUtils.isNotEmpty(lastModify) ? Long.valueOf(lastModify) : 0);
                         mediaDataBean.setWidth(ImagePickerComUtils.isNotEmpty(width) ? Integer.valueOf(width) : 0);
                         mediaDataBean.setHeight(ImagePickerComUtils.isNotEmpty(height) ? Integer.valueOf(height) : 0);
