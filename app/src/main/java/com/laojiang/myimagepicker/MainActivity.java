@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     //添加图片
     private void addImage() {
         ImagePicker build = new ImagePicker.Builder()
-                .pickType(ImagePickType.MUTIL) //设置选取类型(拍照ONLY_CAMERA、单选SINGLE、多选MUTIL)
+                .pickType(ImagePickType.SINGLE) //设置选取类型(拍照ONLY_CAMERA、单选SINGLE、多选MUTIL)
                 .maxNum(9) //设置最大选择数量(此选项只对多选生效，拍照和单选都是1，修改后也无效)
                 .needCamera(true) //是否需要在界面中显示相机入口(类似微信那样)
                 .cachePath(cachePath) //自定义缓存路径(拍照和裁剪都需要用到缓存)

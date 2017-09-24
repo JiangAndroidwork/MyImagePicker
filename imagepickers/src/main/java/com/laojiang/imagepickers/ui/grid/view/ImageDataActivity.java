@@ -227,8 +227,13 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
     public void onImageClicked(MediaDataBean mediaDataBean, int position) {
         if (mOptions.getType() == ImagePickType.SINGLE) {
             if (mOptions.isNeedCrop()) {
-                //执行裁剪
-                com.laojiang.imagepickers.ui.crop.ImageCropActivity.start(this, mediaDataBean.getMediaPath(), mOptions);
+                Log.i("路径==",mediaDataBean.getMediaPath().contains(".gif")+"");
+                if (mediaDataBean.getMediaPath().contains(".gif")||mediaDataBean.getMediaPath().contains(".GIF")){
+                    returnSingleImage(mediaDataBean);
+                }else {
+                    //执行裁剪
+                    com.laojiang.imagepickers.ui.crop.ImageCropActivity.start(this, mediaDataBean.getMediaPath(), mOptions);
+                }
             } else {
                 returnSingleImage(mediaDataBean);
             }
