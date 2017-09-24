@@ -14,7 +14,7 @@ allprojects {
 ```
 **在moudle 中build.gradle中添加依赖：**
 ```
- compile 'com.github.JiangAndroidwork:MyImagePicker:1.2.1'
+ compile 'com.github.JiangAndroidwork:MyImagePicker:1.2.2'
  ```
 ## 2,用法：
 > 基本用法：
