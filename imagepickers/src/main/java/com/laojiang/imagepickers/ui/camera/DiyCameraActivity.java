@@ -2,11 +2,13 @@ package com.laojiang.imagepickers.ui.camera;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -29,10 +31,29 @@ import java.io.File;
  */
 
 public class DiyCameraActivity extends ImagePickerBaseActivity {
+
     private final int GET_PERMISSION_REQUEST = 100; //权限申请自定义码
     private JCameraView jCameraView;
     private boolean granted = false;
     private View decorView;
+    private String cachePath;
+
+    public static void start(Activity context, String path) {
+        Intent starter = new Intent(context, DiyCameraActivity.class);
+        starter.putExtra("cachePath", path);
+        context.startActivityForResult(starter, ImageContants.CAMERA_REQUEST);
+    }
+
+    @Override
+    protected void beforSetContentView(Bundle savedInstanceState) {
+        super.beforSetContentView(savedInstanceState);
+        cachePath = getIntent().getStringExtra("cachePath");
+        if (cachePath == null) {
+            cachePath = Environment.getExternalStorageDirectory().getPath() + File.separator + "JCamera";
+        } else {
+            cachePath = cachePath.substring(0, cachePath.length() - 1);
+        }
+    }
 
     @Override
     protected int getContentViewResId() {
@@ -46,7 +67,7 @@ public class DiyCameraActivity extends ImagePickerBaseActivity {
         jCameraView = (JCameraView) findViewById(R.id.jcameraview);
 
         //设置视频保存路径
-        jCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "JCamera");
+        jCameraView.setSaveVideoPath(cachePath);
 
         //JCameraView监听
         jCameraView.setJCameraLisenter(new JCameraLisenter() {
@@ -56,7 +77,7 @@ public class DiyCameraActivity extends ImagePickerBaseActivity {
                 String path = FileUtil.saveBitmap("MyPictureOrFilm", bitmap);
                 Intent intent = new Intent();
                 intent.putExtra(ImageContants.DIY_CAMERA_PATH, path);
-                setResult(101, intent);
+                setResult(ImageContants.RESULT_CODE_IMAGE, intent);
                 Log.i("JCameraView", "bitmap = " + bitmap.getWidth());
                 finish();
             }
@@ -73,10 +94,12 @@ public class DiyCameraActivity extends ImagePickerBaseActivity {
             @Override
             public void quit() {
                 //退出按钮
-               DiyCameraActivity.this.finish();
+                setResult(RESULT_OK);
+                finish();
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -90,6 +113,7 @@ public class DiyCameraActivity extends ImagePickerBaseActivity {
         super.onPause();
         jCameraView.onPause();
     }
+
     /**
      * 隐藏系统ui
      */
@@ -116,6 +140,7 @@ public class DiyCameraActivity extends ImagePickerBaseActivity {
 
     /**
      * 可以保证 自动隐藏
+     *
      * @param hasFocus
      */
     @Override
@@ -131,6 +156,7 @@ public class DiyCameraActivity extends ImagePickerBaseActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -142,6 +168,7 @@ public class DiyCameraActivity extends ImagePickerBaseActivity {
             hindSystemUI();
         }
     }
+
     /**
      * 获取权限
      */
@@ -191,13 +218,14 @@ public class DiyCameraActivity extends ImagePickerBaseActivity {
                 if (size == 0) {
                     granted = true;
                     jCameraView.onResume();
-                }else{
+                } else {
                     Toast.makeText(this, "请到设置-权限管理中开启", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
         }
     }
+
     @Override
     protected void initData() {
 

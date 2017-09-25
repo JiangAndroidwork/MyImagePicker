@@ -149,8 +149,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
 
     //执行拍照的方法
     private void doTakePhoto() {
-        Intent intent = new Intent(this, DiyCameraActivity.class);
-        startActivityForResult(intent,ImageContants.CAMERA_REQUEST);
+        DiyCameraActivity.start(this,mOptions.getCachePath());
         //调用系统拍照
 //        mPhotoPath = TakePhotoCompatUtils.takePhoto(this, ImageContants.REQUEST_CODE_TAKE_PHOTO, mOptions.getCachePath());
     }
@@ -227,7 +226,6 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
     public void onImageClicked(MediaDataBean mediaDataBean, int position) {
         if (mOptions.getType() == ImagePickType.SINGLE) {
             if (mOptions.isNeedCrop()) {
-                Log.i("路径==",mediaDataBean.getMediaPath().contains(".gif")+"");
                 if (mediaDataBean.getMediaPath().contains(".gif")||mediaDataBean.getMediaPath().contains(".GIF")){
                     returnSingleImage(mediaDataBean);
                 }else {
@@ -353,7 +351,8 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
                 mAdapter.notifyDataSetChanged();
                 onSelectNumChanged(ImageDataModel.getInstance().getResultNum());
             }
-        }else if (requestCode==ImageContants.CAMERA_REQUEST){//自定义 拍照请求码
+        }else if (resultCode==ImageContants.RESULT_CODE_IMAGE){//自定义 拍照请求码
+            if (data==null) return;
             String path = data.getStringExtra(ImageContants.DIY_CAMERA_PATH);
             MediaDataBean bean = new MediaDataBean();
             bean.setType(1);
@@ -361,6 +360,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
             mPhotoPath = path;
             returnSingleImage(bean);
         }else if (resultCode==ImageContants.CAMERA_SHEXIANG_REQUEST){//自定义 摄像请求码
+            if (data==null) return;
             String path = data.getStringExtra(ImageContants.DIY_CAMERA_SHEXIANG_PATH);
             ArrayList<MediaDataBean> resultList = new ArrayList<>();
             MediaDataBean bean = new MediaDataBean();

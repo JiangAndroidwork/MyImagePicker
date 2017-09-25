@@ -113,6 +113,9 @@ public class ImageContants
      *
      */
     public static final int CAMERA_SHEXIANG_REQUEST = 125;
+    //自定义摄像 返回吗
+    public static final int RESULT_CODE_IMAGE = 126;
+
     /**
      * 拍照后图片名字前缀
      */
