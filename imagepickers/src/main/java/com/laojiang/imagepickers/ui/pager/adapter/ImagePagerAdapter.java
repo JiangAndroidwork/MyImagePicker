@@ -57,7 +57,7 @@ public class ImagePagerAdapter extends PagerAdapter
         MediaDataBean imageItem = mAllmageList.get(position);
 
         //加载图片
-        ImageDataModel.getInstance().getDisplayer().display(mActivity, imageItem.getMediaPath(), photoView, mScreenWidth, mScreenHeight);
+        ImageDataModel.getInstance().getDisplayer().display(mActivity, imageItem.getMediaPath(), photoView);
         Log.i("每个图片的属性==",mAllmageList.get(position).getType()+"");
         photoView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener()
         {

@@ -33,4 +33,7 @@ public interface IImagePickerDisplayer
      * @param maxHeight   最大高度
      */
     void display(Context context, String url, ImageView imageView, int placeHolder, int errorHolder, int maxWidth, int maxHeight);
+    void display(Context context, String url, ImageView imageView);
+
+
 }

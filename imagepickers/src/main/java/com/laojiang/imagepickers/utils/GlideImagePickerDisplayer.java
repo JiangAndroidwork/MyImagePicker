@@ -33,4 +33,13 @@ public class GlideImagePickerDisplayer implements com.laojiang.imagepickers.util
                 .override(maxWidth, maxHeight)
                 .into(imageView);
     }
+
+    @Override
+    public void display(Context context, String url, ImageView imageView) {
+        Glide.with(context)
+                .load(url)
+                .into(imageView);
+    }
+
+
 }

@@ -156,6 +156,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
             tvPreview.setVisibility(View.VISIBLE);
             tvPreview.setOnClickListener(this);
         }
+        mActionBar.setVisibility(View.GONE);
         mActionBar.setOnPreviewClickListener(this);
     }
 
