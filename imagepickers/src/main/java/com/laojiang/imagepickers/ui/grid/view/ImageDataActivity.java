@@ -355,7 +355,7 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
             if (data==null) return;
             String path = data.getStringExtra(ImageContants.DIY_CAMERA_PATH);
             MediaDataBean bean = new MediaDataBean();
-            bean.setType(1);
+            bean.setType(0);
             bean.setMediaPath(path);
             mPhotoPath = path;
             returnSingleImage(bean);
