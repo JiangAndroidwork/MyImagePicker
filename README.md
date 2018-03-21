@@ -15,6 +15,7 @@ allprojects {
 **在moudle 中build.gradle中添加依赖：**
 ```
  compile 'com.github.JiangAndroidwork:MyImagePicker:1.2.8'
+ 修复图片预览crash问题
  ```
 ## 2,用法：
 > 基本用法：
