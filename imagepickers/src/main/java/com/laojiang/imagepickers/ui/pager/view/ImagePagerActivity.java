@@ -218,8 +218,7 @@ public class ImagePagerActivity extends ImagePickerBaseActivity {
     //更新Title
     private void updateActionbarTitle() {
         if (mActionBar != null) {
-            mActionBar.setTitle(getString(R.string.imagepicker_pager_title_count
-                    , String.valueOf(mCurPosition + 1), String.valueOf(mDataList.size())));
+            mActionBar.setTitle(String.valueOf(mCurPosition + 1)+"/"+ String.valueOf(mDataList.size()));
         }
     }
 
