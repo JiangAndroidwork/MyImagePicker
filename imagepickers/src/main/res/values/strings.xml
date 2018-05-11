@@ -34,4 +34,5 @@
     <string name="imagepicker_crop_dialog">正在保存图片...</string>
     <string name="imagepicker_crop_save_fail">保存图片失败</string>
     <string name="imagepicker_all_video_floder">全部视频</string>
+    <string name="imagepicker_only_camera">拍照</string>
 </resources>

@@ -105,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
         ImagePicker build = new ImagePicker.Builder()
                 .pickType(ImagePickType.SINGLE) //设置选取类型(拍照ONLY_CAMERA、单选SINGLE、多选MUTIL)
                 .maxNum(9) //设置最大选择数量(此选项只对多选生效，拍照和单选都是1，修改后也无效)
-                .needCamera(true) //是否需要在界面中显示相机入口(类似微信那样)
+                .needCamera(false) //是否需要在界面中显示相机入口(类似微信那样)
                 .cachePath(cachePath) //自定义缓存路径(拍照和裁剪都需要用到缓存)
                 .doCrop(1, 1, 300, 300) //裁剪功能需要调用这个方法，多选模式下无效，参数：aspectX,aspectY,outputX,outputY
                 .displayer(new GlideImagePickerDisplayer()) //自定义图片加载器，默认是Glide实现的,可自定义图片加载器
-                .needVideo(true)//是否需要视频
+                .needVideo(false)//是否需要视频
                 .build();
         build.start(this, REQUEST_CODE, RESULT_CODE); //自定义RequestCode和ResultCode
 

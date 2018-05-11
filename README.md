@@ -14,7 +14,7 @@ allprojects {
 ```
 **在moudle 中build.gradle中添加依赖：**
 ```
- compile 'com.github.JiangAndroidwork:MyImagePicker:1.2.9'
+ compile 'com.github.JiangAndroidwork:MyImagePicker:1.3.0'
  修复图片预览crash问题
  ```
 ## 2,用法：
@@ -89,3 +89,7 @@ VideoDetailActivity.start(MainActivity.this,imageBean);
  >compile 'com.github.bumptech.glide:glide:3.7.0'
  
  >compile 'com.github.JiangAndroidwork:MyCamera:1.1'
+
+
+### 版本：
+1，compile 'com.github.JiangAndroidwork:MyImagePicker:1.3.0'  ：细化功能，区分拍照和摄像。

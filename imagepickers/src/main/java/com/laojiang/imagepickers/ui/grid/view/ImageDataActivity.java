@@ -24,6 +24,7 @@ import com.laojiang.imagepickers.ui.camera.DiyCameraActivity;
 import com.laojiang.imagepickers.ui.video.VideoDetailActivity;
 import com.laojiang.imagepickers.utils.ImagePickerComUtils;
 import com.laojiang.imagepickers.utils.PermissionChecker;
+import com.laojiang.imagepickers.utils.TakePhotoCompatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,11 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
         mActionBar = findView(R.id.acb_image_data);
         tvPreview = findView(R.id.tv_imagepicker_actionbar_preview);
         if (mOptions.getType() == ImagePickType.ONLY_CAMERA) {
-            mActionBar.setTitle(R.string.imagepicker_title_take_photo);
+            if (mOptions.isNeedVideo()) {
+                mActionBar.setTitle(R.string.imagepicker_title_take_photo);
+            }else {
+                mActionBar.setTitle(R.string.imagepicker_only_camera);
+            }
 //            mActionBar.hidePreview();
             tvPreview.setVisibility(View.GONE);
             startTakePhoto();
@@ -149,9 +154,14 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
 
     //执行拍照的方法
     private void doTakePhoto() {
-        DiyCameraActivity.start(this,mOptions.getCachePath());
-        //调用系统拍照
-//        mPhotoPath = TakePhotoCompatUtils.takePhoto(this, ImageContants.REQUEST_CODE_TAKE_PHOTO, mOptions.getCachePath());
+        if (mOptions.isNeedVideo()){
+            DiyCameraActivity.start(this,mOptions.getCachePath());
+        }else {
+            //调用系统拍照
+        mPhotoPath = TakePhotoCompatUtils.takePhoto(this, ImageContants.REQUEST_CODE_TAKE_PHOTO, mOptions.getCachePath());
+        }
+
+
     }
 
     //执行扫描sd卡的方法
@@ -359,6 +369,12 @@ public class ImageDataActivity extends ImagePickerBaseActivity implements IImage
             bean.setMediaPath(path);
             mPhotoPath = path;
             returnSingleImage(bean);
+            if (mOptions.getType() != ImagePickType.MUTIL && mOptions.isNeedCrop()) {
+                //执行裁剪
+                com.laojiang.imagepickers.ui.crop.ImageCropActivity.start(this, mPhotoPath, mOptions);
+            } else {
+                returnSingleImage(bean);
+            }
         }else if (resultCode==ImageContants.CAMERA_SHEXIANG_REQUEST){//自定义 摄像请求码
             if (data==null) return;
             String path = data.getStringExtra(ImageContants.DIY_CAMERA_SHEXIANG_PATH);
